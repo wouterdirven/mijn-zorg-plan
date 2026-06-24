@@ -245,7 +245,7 @@
     let answers = {};
     let questionFlow = [];
     let currentStep = 0;
-    const estimatedTotalSteps = 6;
+    const estimatedTotalSteps = 5;
 
     async function loadData() {
       try {
@@ -346,11 +346,10 @@
     function determineNextQuestion(questionId, value) {
       currentStep++;
       let next = null;
-      if (questionId === 'crisis')          next = 'voor_wie';
-      else if (questionId === 'voor_wie')   next = 'gender';
-      else if (questionId === 'gender')     next = 'eerder_hulp';
-      else if (questionId === 'eerder_hulp') next = 'urgentie';
-      else if (questionId === 'urgentie')   next = 'thema';
+      if (questionId === 'crisis')           next = 'voor_wie';
+      else if (questionId === 'voor_wie')    next = 'gender';
+      else if (questionId === 'gender')      next = 'eerder_hulp';
+      else if (questionId === 'eerder_hulp') next = 'thema';
 
       if (next) { questionFlow.push(next); showQuestion(next); }
       else { showResult(); }
@@ -375,7 +374,6 @@
       const themas = answers.themas || [];
       const v = answers.voor_wie;
       const n = answers.eerder_hulp;
-      const urg = answers.urgentie;
 
       const themaLabels = {
         mentaal: 'Mentale gezondheid', relaties: 'Relaties & geweld',
@@ -384,8 +382,8 @@
       };
 
       const sporenHtml = themas.map((thema, i) => {
-        const key = buildKey(v, n, thema, urg);
-        const serviceIds = data.routing[key] || data.routing[v + '_' + n + '_' + thema] || [];
+        const key = buildKey(v, n, thema);
+        const serviceIds = data.routing[key] || [];
         const services = serviceIds.map(id => data.services.find(s => s.id === id)).filter(Boolean);
         if (services.length === 0) return '';
 
@@ -444,9 +442,12 @@
       document.getElementById('resultSection').style.display = 'block';
     }
 
-    function buildKey(v, n, thema, urg) {
-      const withUrg = v + '_' + n + '_' + thema + '_' + urg;
-      return data.routing[withUrg] ? withUrg : v + '_' + n + '_' + thema;
+    function buildKey(v, n, thema) {
+      const full = v + '_' + n + '_' + thema;
+      if (data.routing[full]) return full;
+      const mid = v + '_' + n;
+      if (data.routing[mid]) return mid;
+      return v;
     }
 
     function toggleAlts(btn) {
