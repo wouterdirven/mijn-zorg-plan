@@ -1,0 +1,256 @@
+:root {
+  color-scheme: light;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --accent: #e0f2fe;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --border: #dbe3ec;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  background: linear-gradient(135deg, #eff6ff 0%, var(--bg) 100%);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.hero,
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
+}
+
+.hero {
+  padding: 32px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  margin: 0 0 10px;
+  font-size: 1.9rem;
+  color: var(--primary-dark);
+}
+
+.hero p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.card {
+  padding: 24px;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--primary), #38bdf8);
+  transition: width 0.25s ease;
+}
+
+.question-title {
+  font-size: 1.25rem;
+  margin: 0 0 16px;
+}
+
+.options {
+  display: grid;
+  gap: 12px;
+}
+
+.option-button {
+  border: 1px solid var(--border);
+  background: #f8fbff;
+  border-radius: 14px;
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--text);
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.option-button:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary);
+  background: #f0f7ff;
+}
+
+.result-section {
+  display: none;
+}
+
+.result-header {
+  margin-bottom: 20px;
+}
+
+.result-header h2 {
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+}
+
+.result-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.plan-summary,
+.info-block,
+.service-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  background: #fcfdff;
+}
+
+.source-block {
+  background: #f0f7ff;
+  border-color: #bfdbfe;
+}
+
+.pill {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  background: var(--accent);
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+.section-title {
+  margin: 24px 0 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.step-list,
+.doc-list {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: var(--text);
+}
+
+.step-item {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.card-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 16px;
+}
+
+.service-card h3 {
+  margin: 0 0 6px;
+  font-size: 1.06rem;
+}
+
+.service-role {
+  color: var(--primary-dark);
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.service-card p {
+  margin: 0 0 8px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.timeline {
+  display: grid;
+  gap: 10px;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f8fbff;
+  border: 1px solid var(--border);
+}
+
+.timeline-badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.timeline-text {
+  color: var(--text);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.actions button {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.actions .primary {
+  background: var(--primary);
+  color: white;
+}
+
+@media (max-width: 700px) {
+  .card-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .container { padding: 16px 12px 32px; }
+  .hero, .card { padding: 20px; }
+  .hero h1 { font-size: 1.6rem; }
+}
