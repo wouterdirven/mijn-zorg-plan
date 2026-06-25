@@ -5,7 +5,7 @@ const questions = [
     options: [
       { value: 'mijzelf', label: 'Voor mijzelf' },
       { value: 'kind', label: 'Voor mijn kind of jongere' },
-      { value: 'cliënt', label: 'Voor een client of bewoner' }
+      { value: 'cliënt', label: 'Voor een cliënt of bewoner' }
     ]
   },
   {
@@ -19,16 +19,6 @@ const questions = [
     ]
   },
   {
-    id: 'extra',
-    title: 'Is er ook een tweede thema dat mee speelt?',
-    options: [
-      { value: 'geen', label: 'Nee, alleen dit' },
-      { value: 'thuis', label: 'Ja, ook thuis of gezin' },
-      { value: 'mentaal', label: 'Ja, ook mentale gezondheid' },
-      { value: 'administratie', label: 'Ja, ook administratie' }
-    ]
-  },
-  {
     id: 'phase',
     title: 'Wat is de huidige stand?',
     options: [
@@ -39,201 +29,128 @@ const questions = [
   }
 ];
 
-const planTemplates = {
-  school: {
-    title: 'School en onderwijs',
-    intro: 'Bij schoolproblemen of een zorgvraag op school is het CLB vaak het eerste praktische aanspreekpunt. Het CLB helpt gratis bij leren, schoolloopbaan, gezondheid en psychosociaal functioneren.',
-    firstService: 'CLB',
-    firstRole: 'Eerste aanspreekpunt',
-    firstAction: 'Neem contact op met de school of het CLB en vraag een gesprek of intake aan. Als je het zelf wilt doen, kan je het CLB ook rechtstreeks contacteren.',
-    firstContact: 'Via het schoolsecretariaat, de leerkracht of de CLB-lijst in jouw gemeente of onderwijsaanbod',
-    firstHow: 'Het CLB luistert naar de vraag, bespreekt de situatie met school en ouders en kan samen met jou kijken naar hulp, begeleiding of een doorverwijzing.',
-    secondService: 'Schoolteam of zorgcoördinator',
-    secondRole: 'Praktische ondersteuning op school',
-    secondAction: 'Vraag of het schoolteam, de zorgcoördinator of een leerlingbegeleider een eerste stap kan zetten, zoals extra begeleiding of een opvolgafspraak.',
-    secondContact: 'Via de school of de zorgcoördinator',
-    steps: [
-      'Bespreek de situatie met de leerkracht, de zorgcoördinator of de school.',
-      'Vraag een afspraak met het CLB of een intake op school.',
-      'Verzamel schoolrapporten, observaties, aantekeningen over het probleem en een korte uitleg van de situatie.',
-      'Vraag welke ondersteuning er direct mogelijk is en of het CLB je kan doorverwijzen naar extra hulp als dat nodig is.'
-    ],
-    documents: ['Schoolrapport of observaties', 'Korte samenvatting van de situatie', 'Contactgegevens van de school of leerkracht'],
-    forms: ['Intakeformulier van de school of het CLB', 'Toestemming om informatie te delen met school en ouders'],
-    waiting: 'De wachttijd kan verschillen. Vraag altijd naar een eerste afspraak, een voorlopige check of een alternatieve hulpvorm als er direct iets nodig is.',
-    timeline: ['Contact opnemen met school of CLB', 'Intake of gesprek', 'Documenten en informatie delen', 'Volgende stap of doorverwijzing'],
-    sourceNote: 'Gebaseerd op informatie van Vlaanderen.be over het CLB: het CLB helpt gratis bij leren, schoolloopbaan, gezondheid en psychosociaal functioneren en werkt op verzoek van leerling, ouders of school.'
-  },
-  zorg: {
-    title: 'Zorg en mentale gezondheid',
-    intro: 'Een huisarts of een eerste hulpdienst is vaak het beste startpunt.',
-    firstService: 'Huisarts of huisartspraktijk',
-    firstRole: 'Eerste hulpverlener',
-    firstAction: 'Maak een afspraak met de huisarts en vertel dat je hulp zoekt voor mentale gezondheid of welzijn.',
-    firstContact: 'Via de huisartspraktijk',
-    firstHow: 'De huisarts luistert, beoordeelt de situatie en kan doorverwijzen naar gespecialiseerde hulp.',
-    secondService: 'CAW of gespecialiseerde hulp',
-    secondRole: 'Extra ondersteuning of specialistische hulp',
-    secondAction: 'Als er meer begeleiding nodig is, vraag naar een afspraak bij CAW of een gespecialiseerde dienst.',
-    secondContact: 'Telefoon of website van CAW of de betreffende dienst',
-    steps: [
-      'Neem contact op met de huisarts.',
-      'Vraag om een intake of een eerste consult.',
-      'Noteer wat je ervaart, welke zorgen er zijn en wat je al hebt geprobeerd.',
-      'Vraag naar wachttijd, doorverwijzing en welke documenten nodig zijn.'
-    ],
-    documents: ['Contactgegevens', 'Korte beschrijving van de situatie', 'Eerdere rapporten of verslagen'],
-    forms: ['Aanvraag voor intake of consult', 'Toestemming voor gegevensuitwisseling'],
-    waiting: 'Voor specialistische hulp kan de wachttijd langer zijn. Vraag naar een tussenoplossing of een voorlopige afspraak.',
-    timeline: ['Contact maken', 'Eerste consult', 'Documenten delen', 'Doorverwijzing of wachttijd']
-  },
-  thuis: {
-    title: 'Thuis, gezin of opvoeding',
-    intro: 'Bij problemen thuis of in het gezin is een lokale dienst of een gezinsdienst vaak een goed startpunt.',
-    firstService: 'Lokale dienst of gezinsondersteuning',
-    firstRole: 'Eerste hulpverlener',
-    firstAction: 'Neem contact op met een lokale dienst of gezinsondersteuning en vraag om een eerste gesprek.',
-    firstContact: 'Via de lokale dienst of het OCMW',
-    firstHow: 'De dienst bespreekt de situatie, kijkt naar wat nodig is en kan ondersteuning of doorverwijzing bieden.',
-    secondService: 'CAW of welzijnswerk',
-    secondRole: 'Extra ondersteuning bij stress, relaties of gezin',
-    secondAction: 'Als de situatie complex is, vraag ook naar CAW of welzijnswerk.',
-    secondContact: 'Telefoon of website van CAW of welzijnswerk',
-    steps: [
-      'Bespreek de situatie met een lokale dienst.',
-      'Vraag welke ondersteuning thuis of in het gezin mogelijk is.',
-      'Maak een korte lijst van wat er al is geprobeerd.',
-      'Vraag welke documenten of formulieren nodig zijn voor de intake.'
-    ],
-    documents: ['Korte omschrijving van de situatie', 'Contactgegevens van betrokken personen', 'Notities over eerdere hulp'],
-    forms: ['Intakeformulier', 'Toestemming om informatie te delen'],
-    waiting: 'Soms is er een wachttijd. Vraag altijd of er een eerste gesprek of tijdelijke ondersteuning mogelijk is.',
-    timeline: ['Contact opnemen', 'Eerste gesprek', 'Documenten klaarzetten', 'Ondersteuning of wachttijd']
-  },
-  administratie: {
-    title: 'Administratie of aanvraag',
-    intro: 'Bij administratieve vragen is een sociale dienst of een lokale ondersteuning vaak het juiste startpunt.',
-    firstService: 'OCMW of sociale dienst',
-    firstRole: 'Eerste hulpverlener',
-    firstAction: 'Neem contact op met het OCMW of de sociale dienst en vraag welke aanvraag of erkenning nodig is.',
-    firstContact: 'Via de gemeente of lokale sociale dienst',
-    firstHow: 'De sociale dienst legt uit welke formulieren er nodig zijn, welke documenten je moet meenemen en hoe je een aanvraag start.',
-    secondService: 'CAW of lokale dienst',
-    secondRole: 'Ondersteuning bij complexere of meerdere aanvragen',
-    secondAction: 'Als het traject complex wordt, vraag om extra ondersteuning bij CAW of een lokale dienst.',
-    secondContact: 'Telefoon of website van CAW of lokale dienst',
-    steps: [
-      'Check welke aanvraag of erkenning nodig is.',
-      'Vraag welke documenten en formulieren nodig zijn.',
-      'Vraag een afspraak of een eerste check aan.',
-      'Volg de aanvraag op en noteer wat nog openstaat.'
-    ],
-    documents: ['Identiteitsgegevens', 'Attesten of rapporten', 'Lijst met benodigde formulieren'],
-    forms: ['Aanvraagformulier', 'Documentenchecklist'],
-    waiting: 'Bij aanvragen kan de wachttijd verschillen. Vraag naar de status, de procedure en of er een tussentijdse update mogelijk is.',
-    timeline: ['Aanvraag checken', 'Formulieren ophalen', 'Documenten indienen', 'Status volgen']
-  }
-};
-
-const extraLabels = {
-  geen: 'Geen extra thema',
-  thuis: 'Ook thuis of gezin',
-  mentaal: 'Ook mentale gezondheid',
-  administratie: 'Ook administratie of aanvraag'
+const trajecten = {
+  school: [
+    {
+      id: 'school-gewoon',
+      label: 'Gewoon onderwijs met extra ondersteuning',
+      beschrijving: 'Je kind blijft in een gewone school, maar krijgt extra hulp via het leersteuncentrum en het CLB.',
+      stappen: [
+        { tekst: 'Contacteer het CLB via de school en vraag een gesprek aan', gedaan: false },
+        { tekst: 'Bespreek welke redelijke aanpassingen de school kan bieden', gedaan: false },
+        { tekst: 'Vraag het CLB een GC-verslag op te maken (verslag voor leersteun)', gedaan: false },
+        { tekst: 'Zoek een leersteuncentrum dat aan de school verbonden is', gedaan: false },
+        { tekst: 'Plan een zorgoverleg met school, CLB en ouders samen', gedaan: false }
+      ],
+      documenten: ['Diagnoseverslagje of attest', 'Schoolrapport', 'GC-verslag van het CLB'],
+      contact: { naam: 'CLB', tel: 'Via de school', website: 'https://www.clbchat.be' }
+    },
+    {
+      id: 'school-buo',
+      label: 'Buitengewoon onderwijs type 9 (ASS)',
+      beschrijving: 'Je kind gaat naar een school voor buitengewoon onderwijs type 9, speciaal voor leerlingen met autisme.',
+      stappen: [
+        { tekst: 'Contacteer het CLB en vraag een IAC-verslag aan (inschrijvingsverslag voor buitengewoon onderwijs)', gedaan: false },
+        { tekst: 'Zoek type 9-scholen in jouw regio op via www.schooldirect.be', gedaan: false },
+        { tekst: 'Plan een oriëntatiegesprek bij een type 9-school', gedaan: false },
+        { tekst: 'Bespreek het traject en de verwachtingen met school en CLB', gedaan: false },
+        { tekst: 'Schrijf je kind in en plan een startgesprek', gedaan: false }
+      ],
+      documenten: ['Diagnoseverslagje of attest van ASS', 'IAC-verslag van het CLB', 'Schoolrapport'],
+      contact: { naam: 'CLB', tel: 'Via de school', website: 'https://www.schooldirect.be' }
+    }
+  ],
+  zorg: [
+    {
+      id: 'zorg-huisarts',
+      label: 'Starten via de huisarts',
+      beschrijving: 'De huisarts is je eerste aanspreekpunt. Hij of zij kan luisteren, beoordelen en doorverwijzen naar de juiste hulp.',
+      stappen: [
+        { tekst: 'Maak een afspraak bij de huisarts en benoem je zorgen', gedaan: false },
+        { tekst: 'Schrijf vooraf op wat je ervaart, wanneer het speelt en wat je al hebt geprobeerd', gedaan: false },
+        { tekst: 'Vraag de huisarts om een doorverwijzing naar een psycholoog of CGG', gedaan: false },
+        { tekst: 'Vraag naar de wachttijd en of er een tijdelijke tussenoplossing is', gedaan: false }
+      ],
+      documenten: ['Korte beschrijving van de klachten', 'Eventueel eerdere verslagen of attesten'],
+      contact: { naam: 'Huisarts', tel: 'Je eigen praktijk', website: 'https://www.huisartsenvlaanderen.be' }
+    },
+    {
+      id: 'zorg-cgg',
+      label: 'Rechtstreeks naar het CGG (geestelijke gezondheidszorg)',
+      beschrijving: 'Het Centrum voor Geestelijke Gezondheidszorg biedt gespecialiseerde begeleiding bij psychische problemen.',
+      stappen: [
+        { tekst: 'Zoek het CGG in jouw regio op via de website', gedaan: false },
+        { tekst: 'Bel of mail voor een intakegesprek', gedaan: false },
+        { tekst: 'Beschrijf kort de situatie bij de eerste contactname', gedaan: false },
+        { tekst: 'Vraag naar de wachttijd en mogelijke alternatieven in de tussentijd', gedaan: false },
+        { tekst: 'Ga naar het intakegesprek en vraag om een behandelplan', gedaan: false }
+      ],
+      documenten: ['Verwijsbrief van huisarts (niet verplicht maar handig)', 'Eerdere diagnoses of verslagen'],
+      contact: { naam: 'CGG', tel: 'Via je regio', website: 'https://www.vgc.be/geestelijke-gezondheid' }
+    }
+  ],
+  thuis: [
+    {
+      id: 'thuis-caw',
+      label: 'Ondersteuning via CAW',
+      beschrijving: 'Het CAW helpt gratis bij problemen thuis: relaties, opvoeding, geweld of stress. Voor iedereen.',
+      stappen: [
+        { tekst: 'Bel of mail het CAW voor een eerste gesprek (078 15 15 15)', gedaan: false },
+        { tekst: 'Leg kort uit wat er thuis speelt', gedaan: false },
+        { tekst: 'Vraag naar begeleiding op maat voor gezin of opvoeding', gedaan: false },
+        { tekst: 'Bespreek of ook andere hulpverleners betrokken moeten worden', gedaan: false }
+      ],
+      documenten: ['Korte beschrijving van de thuissituatie'],
+      contact: { naam: 'CAW', tel: '078 15 15 15', website: 'https://www.caw.be' }
+    },
+    {
+      id: 'thuis-ocmw',
+      label: 'Praktische hulp via OCMW',
+      beschrijving: 'Het OCMW helpt bij financiële problemen, schulden, sociale begeleiding en leefloon.',
+      stappen: [
+        { tekst: 'Ga naar het OCMW van je gemeente of maak een afspraak', gedaan: false },
+        { tekst: 'Neem je identiteitskaart en een overzicht van je financiële situatie mee', gedaan: false },
+        { tekst: 'Vraag welke steun of begeleiding voor jou beschikbaar is', gedaan: false },
+        { tekst: 'Vul de nodige formulieren in en volg de aanvraag op', gedaan: false }
+      ],
+      documenten: ['Identiteitskaart', 'Overzicht inkomsten en uitgaven', 'Eventuele schuldbrieven'],
+      contact: { naam: 'OCMW', tel: 'Via je gemeente', website: 'https://www.vlaanderen.be/ocmw' }
+    }
+  ],
+  administratie: [
+    {
+      id: 'admin-vaph',
+      label: 'Aanvraag via VAPH (handicap of beperking)',
+      beschrijving: 'Het VAPH helpt personen met een beperking aan budget, begeleiding en hulpmiddelen.',
+      stappen: [
+        { tekst: 'Ga naar www.vaph.be en lees de informatie over aanvragen', gedaan: false },
+        { tekst: 'Vraag een multidisciplinair verslag (MDV) op bij een erkend team', gedaan: false },
+        { tekst: 'Dien een aanvraag in bij het VAPH met het MDV', gedaan: false },
+        { tekst: 'Wacht op de beslissing en vraag bij onduidelijkheid om toelichting', gedaan: false },
+        { tekst: 'Kies een vergunde zorgaanbieder als de aanvraag goedgekeurd is', gedaan: false }
+      ],
+      documenten: ['Multidisciplinair verslag (MDV)', 'Identiteitskaart', 'Diagnoseverslagje'],
+      contact: { naam: 'VAPH', tel: '078 35 04 00', website: 'https://www.vaph.be' }
+    },
+    {
+      id: 'admin-ocmw',
+      label: 'Financiële of sociale aanvraag via OCMW',
+      beschrijving: 'Het OCMW helpt bij leefloon, schuldhulp en sociale aanvragen in jouw gemeente.',
+      stappen: [
+        { tekst: 'Maak een afspraak bij het OCMW van je gemeente', gedaan: false },
+        { tekst: 'Neem je identiteitskaart en bewijsstukken mee', gedaan: false },
+        { tekst: 'Vraag welke aanvragen of steun beschikbaar zijn voor jou', gedaan: false },
+        { tekst: 'Dien de aanvraag in en noteer de referentie en datum', gedaan: false }
+      ],
+      documenten: ['Identiteitskaart', 'Bewijsstukken van situatie (rekeningen, brieven)', 'Attest als van toepassing'],
+      contact: { naam: 'OCMW', tel: 'Via je gemeente', website: 'https://www.vlaanderen.be/ocmw' }
+    }
+  ]
 };
 
 let currentQuestionIndex = 0;
 let answers = {};
-
-function getPersonalizedPlan(selectedAnswers) {
-  const domain = selectedAnswers.domain || 'school';
-  const plan = JSON.parse(JSON.stringify(planTemplates[domain] || planTemplates.school));
-  const who = selectedAnswers.who || 'mijzelf';
-  const extra = selectedAnswers.extra || 'geen';
-  const phase = selectedAnswers.phase || 'begin';
-
-  const phaseLabel = phase === 'vast' ? 'We zitten vast' : phase === 'bezig' ? 'We zijn al bezig' : 'We beginnen net';
-  const whoLabel = who === 'kind' ? 'voor jouw kind of jongere' : who === 'cliënt' ? 'voor een client of bewoner' : 'voor jouzelf';
-
-  let intro = plan.intro;
-  let firstAction = plan.firstAction;
-  let secondAction = plan.secondAction;
-  let steps = [...plan.steps];
-  let documents = [...plan.documents];
-  let forms = [...plan.forms];
-  let timeline = [...plan.timeline];
-
-  if (who === 'kind') {
-    intro += ' Omdat je een kind of jongere ondersteunt, is het handig om de situatie helder te beschrijven en samen met school of het CLB op te volgen.';
-    steps.unshift('Noteer in één kort overzicht wat je ziet, wanneer het probleem optreedt en wat je al hebt geprobeerd.');
-    documents.unshift('Overzicht van wat je hebt opgemerkt bij je kind');
-  } else if (who === 'cliënt') {
-    intro += ' Omdat je een client of bewoner ondersteunt, helpt het om de hulpvraag concreet te formuleren en de relevante stappen te volgen.';
-    steps.unshift('Beschrijf de hulpvraag in heldere woorden, zodat de eerste contactpersoon direct begrijpt wat nodig is.');
-  }
-
-  if (phase === 'begin') {
-    intro += ' Je staat nog aan het begin, dus de eersteprioriteit is om de juiste hulpverlener te bereiken en een eerste afspraak te regelen.';
-    firstAction = `${firstAction} Begin met één korte aanvraag of afspraak, zodat er direct een eerste gesprek kan komen.`;
-    steps = [
-      'Maak een eerste contact met de school, het CLB of de juiste hulpverlener.',
-      'Leg kort uit wat er speelt en wat je als eerste wilt bereiken.',
-      'Vraag of er direct een intake of kennismaking mogelijk is.',
-      'Vraag ook welke documenten of informatie de hulpverlener wil ontvangen.'
-    ];
-    timeline = ['Eerste contact', 'Korte intake', 'Documenten delen', 'Volgende stap bepalen'];
-  } else if (phase === 'bezig') {
-    intro += ' Je bent al aan de slag, dus het doel is nu om de voortgang te borgen en te checken of de huidige ondersteuning voldoende is.';
-    firstAction = `${firstAction} Gebruik het bestaande contact en vraag of de hulpverlener de huidige aanpak kan evalueren.`;
-    secondAction = `${secondAction} Als de situatie nog niet duidelijk is, vraag om een terugkommoment of extra begeleiding.`;
-    steps = [
-      'Bekijk wat er al is gedaan en welke afspraken er zijn.',
-      'Vraag aan de hulpverlener of de aanpak nog passend is.',
-      'Noteer wat goed werkt en waar het nog stroef gaat.',
-      'Vraag of er een volgende afspraak of extra ondersteuning nodig is.'
-    ];
-    timeline = ['Huidige aanpak checken', 'Beoordelen wat werkt', 'Extra ondersteuning of afspraak', 'Volgende stap bepalen'];
-  } else if (phase === 'vast') {
-    intro += ' Je zit nu vast, dus het plan moet gericht zijn op een volgende stap, een doorverwijzing of een alternatief.';
-    firstAction = `${firstAction} Vraag expliciet naar een volgende stap, een doorverwijzing of een alternatieve aanpak als de huidige route niet verder helpt.`;
-    secondAction = `${secondAction} Vraag of er een andere hulpverlener of een extra ondersteuningstraject mogelijk is.`;
-    steps = [
-      'Benoem waar je precies vastloopt en wat er tot nu toe is geprobeerd.',
-      'Vraag om een concrete volgende stap of een doorverwijzing.',
-      'Bespreek of er een alternatieve hulpvorm of tijdelijk plan nodig is.',
-      'Laat duidelijk weten welke vraag nu het belangrijkst is.'
-    ];
-    timeline = ['Probleem helder maken', 'Doorverwijzing of alternatief', 'Nieuwe afspraak', 'Evaluatie van de volgende stap'];
-  }
-
-  if (extra === 'thuis') {
-    intro += ' Omdat thuis of gezin ook een rol spelen, is het verstandig om dat mee te nemen in het gesprek.';
-    steps.push('Vraag of de hulpverlener ook kijkt naar de situatie thuis of in het gezin.');
-    documents.push('Korte beschrijving van wat thuis of in het gezin speelt');
-  } else if (extra === 'mentaal') {
-    intro += ' Omdat mentale gezondheid ook meespeelt, is het logisch om die kant in het gesprek mee te nemen.';
-    steps.push('Vraag of de hulpverlener ook kijkt naar stress, angst, gevoelens of mentale belasting.');
-    documents.push('Korte beschrijving van stress, angst of andere mentale signalen');
-  } else if (extra === 'administratie') {
-    intro += ' Omdat administratie of een aanvraag ook meedoet, is het handig om die verplichtingen of formulieren direct mee te nemen.';
-    steps.push('Vraag of de hulpverlener of dienst ook helpt met de benodigde formulieren of aanvraagstukken.');
-    forms.push('Checklijst van benodigde documenten voor de aanvraag');
-  }
-
-  return {
-    ...plan,
-    intro,
-    firstAction,
-    secondAction,
-    steps,
-    documents,
-    forms,
-    timeline,
-    phaseLabel,
-    whoLabel,
-    summaryLine: `${plan.title} · ${phaseLabel} · ${whoLabel}`
-  };
-}
+let gekozenPad = null;
 
 function renderQuestion() {
   const question = questions[currentQuestionIndex];
@@ -266,101 +183,104 @@ function goToNextQuestion() {
     renderQuestion();
     return;
   }
-
-  renderResult();
+  renderPadKeuze();
 }
 
-function renderResult() {
-  const plan = getPersonalizedPlan(answers);
-  const extra = answers.extra || 'geen';
+function renderPadKeuze() {
+  const domain = answers.domain || 'school';
+  const paden = trajecten[domain] || trajecten.school;
 
   document.getElementById('questionBox').style.display = 'none';
   document.getElementById('resultSection').style.display = 'block';
-  document.getElementById('resultTitle').textContent = 'Jouw persoonlijk plan';
-  document.getElementById('resultSubtitle').textContent = `We hebben een concreet traject gemaakt voor ${plan.title.toLowerCase()} op basis van jouw situatie.`;
+  document.getElementById('resultTitle').textContent = 'Kies jouw traject';
+  document.getElementById('resultSubtitle').textContent = 'Op basis van jouw situatie zijn er twee mogelijke paden. Kies het pad dat het beste bij jou past.';
 
   const planBody = document.getElementById('planBody');
   planBody.innerHTML = `
-    <div class="plan-summary">
-      <div class="pill">${plan.title}</div>
-      <p>${plan.intro}</p>
-      <p><strong>Jouw situatie:</strong> ${plan.summaryLine}</p>
-      <p><strong>Extra thema:</strong> ${extraLabels[extra] || extraLabels.geen}</p>
-      <p><strong>Volgende stap:</strong> ${plan.firstAction}</p>
-    </div>
-
-    ${plan.sourceNote ? `
-      <div class="info-block source-block">
-        <h3>Bron en uitgangspunt</h3>
-        <p>${plan.sourceNote}</p>
-      </div>
-    ` : ''}
-
-    <div class="section-title">Wat moet je doen?</div>
-    <ol class="step-list">
-      ${plan.steps.map((step) => `<li class="step-item">${step}</li>`).join('')}
-    </ol>
-
-    <div class="card-grid">
-      <div class="service-card">
-        <h3>${plan.firstService}</h3>
-        <p class="service-role">${plan.firstRole}</p>
-        <p><strong>Wat je doet:</strong> ${plan.firstAction}</p>
-        <p><strong>Contact:</strong> ${plan.firstContact}</p>
-        <p><strong>Hoe het werkt:</strong> ${plan.firstHow}</p>
-      </div>
-      <div class="service-card">
-        <h3>${plan.secondService}</h3>
-        <p class="service-role">${plan.secondRole}</p>
-        <p><strong>Wat je doet:</strong> ${plan.secondAction}</p>
-        <p><strong>Contact:</strong> ${plan.secondContact}</p>
-      </div>
-    </div>
-
-    <div class="info-block">
-      <h3>Welke documenten heb je nodig?</h3>
-      <ul class="doc-list">
-        ${plan.documents.map((doc) => `<li>${doc}</li>`).join('')}
-      </ul>
-    </div>
-
-    <div class="info-block">
-      <h3>Welke formulieren of aanvragen?</h3>
-      <ul class="doc-list">
-        ${plan.forms.map((form) => `<li>${form}</li>`).join('')}
-      </ul>
-    </div>
-
-    <div class="info-block">
-      <h3>Wachttijden en alternatieven</h3>
-      <p>${plan.waiting}</p>
-    </div>
-
-    <div class="section-title">Visueel schema</div>
-    <div class="timeline">
-      ${plan.timeline.map((item, index) => `
-        <div class="timeline-item">
-          <div class="timeline-badge">${index + 1}</div>
-          <div class="timeline-text">${item}</div>
+    <div class="pad-keuze">
+      ${paden.map((pad) => `
+        <div class="pad-kaart" data-pad-id="${pad.id}">
+          <h3>${pad.label}</h3>
+          <p>${pad.beschrijving}</p>
+          <button class="primary kies-pad-btn" data-pad-id="${pad.id}">Dit pad kiezen</button>
         </div>
       `).join('')}
     </div>
   `;
+
+  document.querySelectorAll('.kies-pad-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const padId = btn.getAttribute('data-pad-id');
+      const pad = paden.find((p) => p.id === padId);
+      gekozenPad = pad;
+      renderTraject(pad);
+    });
+  });
+}
+
+function renderTraject(pad) {
+  document.getElementById('resultTitle').textContent = pad.label;
+  document.getElementById('resultSubtitle').textContent = pad.beschrijving;
+
+  const planBody = document.getElementById('planBody');
+  planBody.innerHTML = `
+    <div class="traject-wrap">
+      <div class="sectie-titel">Jouw stappen</div>
+      <ul class="stap-lijst" id="stapLijst">
+        ${pad.stappen.map((stap, i) => `
+          <li class="stap-item${stap.gedaan ? ' gedaan' : ''}" data-index="${i}">
+            <button class="stap-check" aria-label="Stap afvinken" data-index="${i}">
+              <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+                <path class="vink" d="M5.5 10l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <span class="stap-tekst">${stap.tekst}</span>
+          </li>
+        `).join('')}
+      </ul>
+
+      <div class="info-blok">
+        <h3>Welke documenten heb je nodig?</h3>
+        <ul class="doc-lijst">
+          ${pad.documenten.map((doc) => `<li>${doc}</li>`).join('')}
+        </ul>
+      </div>
+
+      <div class="info-blok contact-blok">
+        <h3>Eerste contact</h3>
+        <p><strong>${pad.contact.naam}</strong></p>
+        <p>Tel: ${pad.contact.tel}</p>
+        <p><a href="${pad.contact.website}" target="_blank" rel="noopener noreferrer">${pad.contact.website}</a></p>
+      </div>
+
+      <div class="acties">
+        <button class="secondary" id="andereKeuzeBtn">Ander pad kiezen</button>
+        <button class="primary" id="restartButton">Opnieuw beginnen</button>
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('.stap-check').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const index = parseInt(btn.getAttribute('data-index'));
+      gekozenPad.stappen[index].gedaan = !gekozenPad.stappen[index].gedaan;
+      const item = document.querySelector(`.stap-item[data-index="${index}"]`);
+      item.classList.toggle('gedaan', gekozenPad.stappen[index].gedaan);
+    });
+  });
+
+  document.getElementById('andereKeuzeBtn').addEventListener('click', () => renderPadKeuze());
+  document.getElementById('restartButton').addEventListener('click', restartFlow);
 }
 
 function restartFlow() {
   currentQuestionIndex = 0;
   answers = {};
+  gekozenPad = null;
   renderQuestion();
-}
-
-if (typeof module !== 'undefined') {
-  module.exports = {
-    getPersonalizedPlan
-  };
 }
 
 window.addEventListener('DOMContentLoaded', () => {
   renderQuestion();
-  document.getElementById('restartButton').addEventListener('click', restartFlow);
 });
