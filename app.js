@@ -43,7 +43,56 @@ const trajecten = {
         { tekst: 'Plan een zorgoverleg met school, CLB en ouders samen', gedaan: false }
       ],
       documenten: ['Diagnoseverslagje of attest', 'Schoolrapport', 'GC-verslag van het CLB'],
-      contact: { naam: 'CLB', tel: 'Via de school', website: 'https://www.clbchat.be' }
+      contact: { naam: 'CLB', tel: 'Via de school', website: 'https://www.clbchat.be' },
+      vervolg: {
+        vraag: 'Ben je al bij het CLB geweest?',
+        opties: [
+          {
+            id: 'verder-geholpen',
+            label: 'Ja, en we worden verder geholpen',
+            titel: 'Jullie worden verder geholpen binnen het CLB-traject',
+            stappen: [
+              'Vraag wanneer de volgende afspraak is en met wie.',
+              'Vraag of het GC-verslag wordt opgemaakt voor leersteun.',
+              'Vraag of het CLB ook contact opneemt met de school.',
+              'Noteer de naam van de begeleider en de afgesproken volgende stap.'
+            ]
+          },
+          {
+            id: 'doorverwezen',
+            label: 'Ja, en we zijn doorverwezen',
+            titel: 'Jullie zijn doorverwezen naar een andere dienst',
+            stappen: [
+              'Vraag een schriftelijke doorverwijzing of korte brief mee.',
+              'Vraag een samenvatting van het gesprek of een verslag.',
+              'Neem contact op met de nieuwe organisatie en zeg dat het CLB je doorstuurde.',
+              'Vraag wat die nieuwe organisatie nodig heeft van het CLB of van de school.'
+            ]
+          },
+          {
+            id: 'wachtlijst',
+            label: 'Ja, maar we staan op een wachtlijst',
+            titel: 'Jullie staan op een wachtlijst',
+            stappen: [
+              'Vraag of de school al kleine aanpassingen kan doen zonder formeel verslag.',
+              'Vraag een voorlopige nota of samenvatting voor de school.',
+              'Noteer de datum van je aanvraag en vraag een bevestiging.',
+              'Vraag wat je in de tussentijd al kan doen met school of thuis.'
+            ]
+          },
+          {
+            id: 'nog-niet',
+            label: 'Nee, nog niet',
+            titel: 'Eerst het eerste gesprek regelen',
+            stappen: [
+              'Bel of mail via de school om een CLB-gesprek te vragen.',
+              'Schrijf in 3 zinnen op wat het probleem is.',
+              'Neem rapporten of observaties mee naar het gesprek.',
+              'Vraag aan het einde van het gesprek wat de concrete volgende stap is.'
+            ]
+          }
+        ]
+      }
     },
     {
       id: 'school-buo',
@@ -254,6 +303,18 @@ function renderTraject(pad) {
         <p><a href="${pad.contact.website}" target="_blank" rel="noopener noreferrer">${pad.contact.website}</a></p>
       </div>
 
+      ${pad.vervolg ? `
+        <div class="info-blok vervolg-blok">
+          <h3>${pad.vervolg.vraag}</h3>
+          <div class="vervolg-opties">
+            ${pad.vervolg.opties.map((optie) => `
+              <button class="secondary vervolg-optie-btn" data-vervolg-id="${optie.id}">${optie.label}</button>
+            `).join('')}
+          </div>
+          <div id="vervolgResultaat"></div>
+        </div>
+      ` : ''}
+
       <div class="acties">
         <button class="secondary" id="andereKeuzeBtn">Ander pad kiezen</button>
         <button class="primary" id="restartButton">Opnieuw beginnen</button>
@@ -270,8 +331,30 @@ function renderTraject(pad) {
     });
   });
 
+  if (pad.vervolg) {
+    document.querySelectorAll('.vervolg-optie-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const optieId = btn.getAttribute('data-vervolg-id');
+        const optie = pad.vervolg.opties.find((o) => o.id === optieId);
+        renderVervolgResultaat(optie);
+      });
+    });
+  }
+
   document.getElementById('andereKeuzeBtn').addEventListener('click', () => renderPadKeuze());
   document.getElementById('restartButton').addEventListener('click', restartFlow);
+}
+
+function renderVervolgResultaat(optie) {
+  const vervolgResultaat = document.getElementById('vervolgResultaat');
+  vervolgResultaat.innerHTML = `
+    <div class="vervolg-resultaat-inner">
+      <h4>${optie.titel}</h4>
+      <ul class="doc-lijst">
+        ${optie.stappen.map((stap) => `<li>${stap}</li>`).join('')}
+      </ul>
+    </div>
+  `;
 }
 
 function restartFlow() {
