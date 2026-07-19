@@ -1,369 +1,248 @@
-const questions = [
-  {
-    id: 'who',
-    title: 'Voor wie is de hulpvraag?',
-    options: [
-      { value: 'mijzelf', label: 'Voor mijzelf' },
-      { value: 'kind', label: 'Voor mijn kind of jongere' },
-      { value: 'cliënt', label: 'Voor een cliënt of bewoner' }
-    ]
-  },
-  {
-    id: 'domain',
-    title: 'Waar draait het vooral om?',
-    options: [
-      { value: 'school', label: 'School of leren' },
-      { value: 'zorg', label: 'Zorg of mentale gezondheid' },
-      { value: 'thuis', label: 'Thuis, gezin of opvoeding' },
-      { value: 'administratie', label: 'Administratie of aanvraag' }
-    ]
-  },
-  {
-    id: 'phase',
-    title: 'Wat is de huidige stand?',
-    options: [
-      { value: 'begin', label: 'We beginnen net' },
-      { value: 'bezig', label: 'We zijn al bezig' },
-      { value: 'vast', label: 'We zitten vast' }
-    ]
-  }
-];
-
-const trajecten = {
-  school: [
-    {
-      id: 'school-gewoon',
-      label: 'Gewoon onderwijs met extra ondersteuning',
-      beschrijving: 'Je kind blijft in een gewone school, maar krijgt extra hulp via het leersteuncentrum en het CLB.',
-      stappen: [
-        { tekst: 'Contacteer het CLB via de school en vraag een gesprek aan', gedaan: false },
-        { tekst: 'Bespreek welke redelijke aanpassingen de school kan bieden', gedaan: false },
-        { tekst: 'Vraag het CLB een GC-verslag op te maken (verslag voor leersteun)', gedaan: false },
-        { tekst: 'Zoek een leersteuncentrum dat aan de school verbonden is', gedaan: false },
-        { tekst: 'Plan een zorgoverleg met school, CLB en ouders samen', gedaan: false }
-      ],
-      documenten: ['Diagnoseverslagje of attest', 'Schoolrapport', 'GC-verslag van het CLB'],
-      contact: { naam: 'CLB', tel: 'Via de school', website: 'https://www.clbchat.be' },
-      vervolg: {
-        vraag: 'Ben je al bij het CLB geweest?',
-        opties: [
-          {
-            id: 'verder-geholpen',
-            label: 'Ja, en we worden verder geholpen',
-            titel: 'Jullie worden verder geholpen binnen het CLB-traject',
-            stappen: [
-              'Vraag wanneer de volgende afspraak is en met wie.',
-              'Vraag of het GC-verslag wordt opgemaakt voor leersteun.',
-              'Vraag of het CLB ook contact opneemt met de school.',
-              'Noteer de naam van de begeleider en de afgesproken volgende stap.'
-            ]
-          },
-          {
-            id: 'doorverwezen',
-            label: 'Ja, en we zijn doorverwezen',
-            titel: 'Jullie zijn doorverwezen naar een andere dienst',
-            stappen: [
-              'Vraag een schriftelijke doorverwijzing of korte brief mee.',
-              'Vraag een samenvatting van het gesprek of een verslag.',
-              'Neem contact op met de nieuwe organisatie en zeg dat het CLB je doorstuurde.',
-              'Vraag wat die nieuwe organisatie nodig heeft van het CLB of van de school.'
-            ]
-          },
-          {
-            id: 'wachtlijst',
-            label: 'Ja, maar we staan op een wachtlijst',
-            titel: 'Jullie staan op een wachtlijst',
-            stappen: [
-              'Vraag of de school al kleine aanpassingen kan doen zonder formeel verslag.',
-              'Vraag een voorlopige nota of samenvatting voor de school.',
-              'Noteer de datum van je aanvraag en vraag een bevestiging.',
-              'Vraag wat je in de tussentijd al kan doen met school of thuis.'
-            ]
-          },
-          {
-            id: 'nog-niet',
-            label: 'Nee, nog niet',
-            titel: 'Eerst het eerste gesprek regelen',
-            stappen: [
-              'Bel of mail via de school om een CLB-gesprek te vragen.',
-              'Schrijf in 3 zinnen op wat het probleem is.',
-              'Neem rapporten of observaties mee naar het gesprek.',
-              'Vraag aan het einde van het gesprek wat de concrete volgende stap is.'
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'school-buo',
-      label: 'Buitengewoon onderwijs type 9 (ASS)',
-      beschrijving: 'Je kind gaat naar een school voor buitengewoon onderwijs type 9, speciaal voor leerlingen met autisme.',
-      stappen: [
-        { tekst: 'Contacteer het CLB en vraag een IAC-verslag aan (inschrijvingsverslag voor buitengewoon onderwijs)', gedaan: false },
-        { tekst: 'Zoek type 9-scholen in jouw regio op via www.schooldirect.be', gedaan: false },
-        { tekst: 'Plan een oriëntatiegesprek bij een type 9-school', gedaan: false },
-        { tekst: 'Bespreek het traject en de verwachtingen met school en CLB', gedaan: false },
-        { tekst: 'Schrijf je kind in en plan een startgesprek', gedaan: false }
-      ],
-      documenten: ['Diagnoseverslagje of attest van ASS', 'IAC-verslag van het CLB', 'Schoolrapport'],
-      contact: { naam: 'CLB', tel: 'Via de school', website: 'https://www.schooldirect.be' }
-    }
-  ],
-  zorg: [
-    {
-      id: 'zorg-huisarts',
-      label: 'Starten via de huisarts',
-      beschrijving: 'De huisarts is je eerste aanspreekpunt. Hij of zij kan luisteren, beoordelen en doorverwijzen naar de juiste hulp.',
-      stappen: [
-        { tekst: 'Maak een afspraak bij de huisarts en benoem je zorgen', gedaan: false },
-        { tekst: 'Schrijf vooraf op wat je ervaart, wanneer het speelt en wat je al hebt geprobeerd', gedaan: false },
-        { tekst: 'Vraag de huisarts om een doorverwijzing naar een psycholoog of CGG', gedaan: false },
-        { tekst: 'Vraag naar de wachttijd en of er een tijdelijke tussenoplossing is', gedaan: false }
-      ],
-      documenten: ['Korte beschrijving van de klachten', 'Eventueel eerdere verslagen of attesten'],
-      contact: { naam: 'Huisarts', tel: 'Je eigen praktijk', website: 'https://www.huisartsenvlaanderen.be' }
-    },
-    {
-      id: 'zorg-cgg',
-      label: 'Rechtstreeks naar het CGG (geestelijke gezondheidszorg)',
-      beschrijving: 'Het Centrum voor Geestelijke Gezondheidszorg biedt gespecialiseerde begeleiding bij psychische problemen.',
-      stappen: [
-        { tekst: 'Zoek het CGG in jouw regio op via de website', gedaan: false },
-        { tekst: 'Bel of mail voor een intakegesprek', gedaan: false },
-        { tekst: 'Beschrijf kort de situatie bij de eerste contactname', gedaan: false },
-        { tekst: 'Vraag naar de wachttijd en mogelijke alternatieven in de tussentijd', gedaan: false },
-        { tekst: 'Ga naar het intakegesprek en vraag om een behandelplan', gedaan: false }
-      ],
-      documenten: ['Verwijsbrief van huisarts (niet verplicht maar handig)', 'Eerdere diagnoses of verslagen'],
-      contact: { naam: 'CGG', tel: 'Via je regio', website: 'https://www.vgc.be/geestelijke-gezondheid' }
-    }
-  ],
-  thuis: [
-    {
-      id: 'thuis-caw',
-      label: 'Ondersteuning via CAW',
-      beschrijving: 'Het CAW helpt gratis bij problemen thuis: relaties, opvoeding, geweld of stress. Voor iedereen.',
-      stappen: [
-        { tekst: 'Bel of mail het CAW voor een eerste gesprek (078 15 15 15)', gedaan: false },
-        { tekst: 'Leg kort uit wat er thuis speelt', gedaan: false },
-        { tekst: 'Vraag naar begeleiding op maat voor gezin of opvoeding', gedaan: false },
-        { tekst: 'Bespreek of ook andere hulpverleners betrokken moeten worden', gedaan: false }
-      ],
-      documenten: ['Korte beschrijving van de thuissituatie'],
-      contact: { naam: 'CAW', tel: '078 15 15 15', website: 'https://www.caw.be' }
-    },
-    {
-      id: 'thuis-ocmw',
-      label: 'Praktische hulp via OCMW',
-      beschrijving: 'Het OCMW helpt bij financiële problemen, schulden, sociale begeleiding en leefloon.',
-      stappen: [
-        { tekst: 'Ga naar het OCMW van je gemeente of maak een afspraak', gedaan: false },
-        { tekst: 'Neem je identiteitskaart en een overzicht van je financiële situatie mee', gedaan: false },
-        { tekst: 'Vraag welke steun of begeleiding voor jou beschikbaar is', gedaan: false },
-        { tekst: 'Vul de nodige formulieren in en volg de aanvraag op', gedaan: false }
-      ],
-      documenten: ['Identiteitskaart', 'Overzicht inkomsten en uitgaven', 'Eventuele schuldbrieven'],
-      contact: { naam: 'OCMW', tel: 'Via je gemeente', website: 'https://www.vlaanderen.be/ocmw' }
-    }
-  ],
-  administratie: [
-    {
-      id: 'admin-vaph',
-      label: 'Aanvraag via VAPH (handicap of beperking)',
-      beschrijving: 'Het VAPH helpt personen met een beperking aan budget, begeleiding en hulpmiddelen.',
-      stappen: [
-        { tekst: 'Ga naar www.vaph.be en lees de informatie over aanvragen', gedaan: false },
-        { tekst: 'Vraag een multidisciplinair verslag (MDV) op bij een erkend team', gedaan: false },
-        { tekst: 'Dien een aanvraag in bij het VAPH met het MDV', gedaan: false },
-        { tekst: 'Wacht op de beslissing en vraag bij onduidelijkheid om toelichting', gedaan: false },
-        { tekst: 'Kies een vergunde zorgaanbieder als de aanvraag goedgekeurd is', gedaan: false }
-      ],
-      documenten: ['Multidisciplinair verslag (MDV)', 'Identiteitskaart', 'Diagnoseverslagje'],
-      contact: { naam: 'VAPH', tel: '078 35 04 00', website: 'https://www.vaph.be' }
-    },
-    {
-      id: 'admin-ocmw',
-      label: 'Financiële of sociale aanvraag via OCMW',
-      beschrijving: 'Het OCMW helpt bij leefloon, schuldhulp en sociale aanvragen in jouw gemeente.',
-      stappen: [
-        { tekst: 'Maak een afspraak bij het OCMW van je gemeente', gedaan: false },
-        { tekst: 'Neem je identiteitskaart en bewijsstukken mee', gedaan: false },
-        { tekst: 'Vraag welke aanvragen of steun beschikbaar zijn voor jou', gedaan: false },
-        { tekst: 'Dien de aanvraag in en noteer de referentie en datum', gedaan: false }
-      ],
-      documenten: ['Identiteitskaart', 'Bewijsstukken van situatie (rekeningen, brieven)', 'Attest als van toepassing'],
-      contact: { naam: 'OCMW', tel: 'Via je gemeente', website: 'https://www.vlaanderen.be/ocmw' }
-    }
-  ]
-};
-
-let currentQuestionIndex = 0;
+let DATA = null;
 let answers = {};
-let gekozenPad = null;
 
-function renderQuestion() {
-  const question = questions[currentQuestionIndex];
-  const progressPercent = ((currentQuestionIndex + 1) / questions.length) * 100;
+async function init() {
+  DATA = await fetch('data.json').then((r) => r.json());
+  renderCrisisBanner();
+  showStep('crisis');
+}
 
+function renderCrisisBanner() {
+  const el = document.getElementById('crisisBanner');
+  if (!el || !DATA.crisis_info) return;
+  el.innerHTML = `
+    <strong>${DATA.crisis_info.title}</strong>
+    <div class="crisis-items">
+      ${DATA.crisis_info.services.map((s) => `<span>${s.name} - ${s.description}</span>`).join('')}
+    </div>
+  `;
+}
+
+function showStep(stepId) {
+  if (stepId === 'crisis') return renderCrisisQuestion();
+  if (stepId === 'result') return renderResult();
+  renderGenericQuestion(stepId);
+}
+
+function renderCrisisQuestion() {
+  const q = DATA.questions.crisis;
   document.getElementById('questionBox').style.display = 'block';
   document.getElementById('resultSection').style.display = 'none';
-  document.getElementById('progressFill').style.width = `${progressPercent}%`;
-  document.getElementById('progressText').textContent = `Vraag ${currentQuestionIndex + 1} van ${questions.length}`;
-  document.getElementById('questionTitle').textContent = question.title;
+  document.getElementById('progressText').textContent = 'Eerste vraag';
+  document.getElementById('progressFill').style.width = '10%';
+  document.getElementById('questionTitle').textContent = q.text;
 
   const optionsContainer = document.getElementById('options');
   optionsContainer.innerHTML = '';
-
-  question.options.forEach((option) => {
+  q.options.forEach((opt) => {
     const button = document.createElement('button');
     button.className = 'option-button';
-    button.textContent = option.label;
+    button.textContent = opt.label;
     button.addEventListener('click', () => {
-      answers[question.id] = option.value;
-      goToNextQuestion();
+      if (opt.value === 'ja') {
+        answers.routeOverride = 'crisis';
+        showStep('result');
+      } else {
+        showStep('voor_wie');
+      }
     });
     optionsContainer.appendChild(button);
   });
 }
 
-function goToNextQuestion() {
-  if (currentQuestionIndex < questions.length - 1) {
-    currentQuestionIndex += 1;
-    renderQuestion();
-    return;
-  }
-  renderPadKeuze();
+function getQuestionDef(stepId) {
+  if (stepId === 'ouder_school_sub1') return DATA.questions.ouder_school_sub1;
+  return DATA.questions[stepId];
 }
 
-function renderPadKeuze() {
-  const domain = answers.domain || 'school';
-  const paden = trajecten[domain] || trajecten.school;
+const STEP_ORDER = ['voor_wie', 'eerder_hulp', 'thema'];
+
+function renderGenericQuestion(stepId) {
+  const q = getQuestionDef(stepId);
+  if (!q) return showStep('result');
+
+  document.getElementById('questionBox').style.display = 'block';
+  document.getElementById('resultSection').style.display = 'none';
+
+  const stepIndex = STEP_ORDER.indexOf(stepId);
+  if (stepIndex >= 0) {
+    document.getElementById('progressText').textContent = `Vraag ${stepIndex + 2}`;
+    document.getElementById('progressFill').style.width = `${((stepIndex + 2) / 6) * 100}%`;
+  } else {
+    document.getElementById('progressText').textContent = 'Nog even doorvragen';
+    document.getElementById('progressFill').style.width = '80%';
+  }
+
+  document.getElementById('questionTitle').textContent = q.text;
+
+  const optionsContainer = document.getElementById('options');
+  optionsContainer.innerHTML = '';
+  q.options.forEach((opt) => {
+    const button = document.createElement('button');
+    button.className = 'option-button';
+    button.textContent = opt.label;
+    button.addEventListener('click', () => {
+      answers[stepId] = opt.value;
+      determineNext(stepId, opt.value);
+    });
+    optionsContainer.appendChild(button);
+  });
+}
+
+function determineNext(stepId, value) {
+  switch (stepId) {
+    case 'voor_wie':
+      return showStep('eerder_hulp');
+    case 'eerder_hulp':
+      return showStep('thema');
+    case 'thema':
+      if (value === 'mentaal') return showStep('mentaal_sub1');
+      if (value === 'relaties') return showStep('relaties_sub1');
+      if (value === 'school') return showStep(answers.voor_wie === 'ouder' ? 'ouder_school_sub1' : 'school_sub1');
+      if (value === 'opvoeding') return showStep('opvoeding_sub1');
+      if (value === 'verslaving') return showStep('verslaving_sub1');
+      return showStep('result');
+    case 'mentaal_sub1':
+      if (value === 'zelfmoord') { answers.routeOverride = 'zelfmoord'; return showStep('result'); }
+      if (value === 'angst' || value === 'depressie') return showStep('urgentie');
+      if (value === 'anders') return showStep('mentaal_sub2');
+      return showStep('result');
+    case 'urgentie':
+      return showStep('result');
+    case 'mentaal_sub2':
+      return showStep('result');
+    case 'relaties_sub1':
+      if (value === 'seksueel_geweld') { answers.routeOverride = 'seksueel_geweld'; return showStep('result'); }
+      if (value === 'lichamelijk_geweld') return showStep('relaties_sub2');
+      return showStep('result');
+    case 'relaties_sub2':
+      if (value === 'onveilig') answers.routeOverride = 'geweld_onveilig';
+      return showStep('result');
+    case 'school_sub1':
+      if (value === 'pesten') return showStep('school_sub2');
+      return showStep('result');
+    case 'ouder_school_sub1':
+      return showStep('result');
+    case 'school_sub2':
+      return showStep('result');
+    case 'opvoeding_sub1':
+      return showStep('opvoeding_sub2');
+    case 'opvoeding_sub2':
+      return showStep('result');
+    case 'verslaving_sub1':
+      return showStep('verslaving_sub2');
+    case 'verslaving_sub2':
+      return showStep('result');
+    default:
+      return showStep('result');
+  }
+}
+
+function buildCandidateKeys() {
+  const { voor_wie, eerder_hulp, thema } = answers;
+  const parts = [voor_wie, eerder_hulp, thema];
+
+  if (thema === 'mentaal') {
+    if (answers.mentaal_sub1 === 'angst' || answers.mentaal_sub1 === 'depressie') {
+      parts.push(answers.mentaal_sub1);
+      if (answers.urgentie) parts.push(answers.urgentie);
+    } else if (answers.mentaal_sub1 === 'stress') {
+      parts.push('stress');
+    } else if (answers.mentaal_sub1 === 'eetstoornis') {
+      parts.push('eetstoornis');
+    } else if (answers.mentaal_sub2 === 'ernstig') {
+      parts.push('ernstig');
+    }
+  } else if (thema === 'relaties') {
+    if (['relatieproblemen', 'familie', 'eenzaamheid'].includes(answers.relaties_sub1)) {
+      parts.push(answers.relaties_sub1);
+    } else if (answers.relaties_sub1 === 'lichamelijk_geweld') {
+      parts.push('geweld');
+    }
+  } else if (thema === 'school') {
+    const sub1 = answers.school_sub1 || answers.ouder_school_sub1;
+    if (sub1) parts.push(sub1);
+    if (answers.school_sub2 === 'veel') parts.push('veel');
+  } else if (thema === 'opvoeding') {
+    if (answers.opvoeding_sub1) parts.push(answers.opvoeding_sub1);
+    if (answers.opvoeding_sub2) parts.push(answers.opvoeding_sub2);
+  } else if (thema === 'verslaving') {
+    if (answers.verslaving_sub1) parts.push(answers.verslaving_sub1);
+    if (answers.verslaving_sub2 === 'ernstig') parts.push('ernstig');
+  }
+
+  const keys = [];
+  for (let i = parts.length; i >= 3; i -= 1) {
+    keys.push(parts.slice(0, i).join('_'));
+  }
+  return keys;
+}
+
+function resolveServices() {
+  if (answers.routeOverride === 'crisis') {
+    return { key: 'crisis', serviceIds: DATA.crisis_services.map((s) => s.id).filter((id) => DATA.services.some((sv) => sv.id === id)), isCrisis: true };
+  }
+  if (answers.routeOverride === 'zelfmoord') {
+    const key = answers.voor_wie === 'jongere' ? 'jongere_zelfmoord' : 'volwassene_zelfmoord';
+    return { key, serviceIds: DATA.routing[key] || [] };
+  }
+  if (answers.routeOverride === 'geweld_onveilig') {
+    return { key: 'geweld_onveilig', serviceIds: DATA.routing.geweld_onveilig || [] };
+  }
+  if (answers.routeOverride === 'seksueel_geweld') {
+    return { key: 'seksueel_geweld', serviceIds: DATA.routing.seksueel_geweld || [] };
+  }
+  for (const key of buildCandidateKeys()) {
+    if (DATA.routing[key]) return { key, serviceIds: DATA.routing[key] };
+  }
+  return { key: null, serviceIds: ['huisarts', 'caw', 'tele-onthaal'] };
+}
+
+function renderResult() {
+  const { key, serviceIds, isCrisis } = resolveServices();
 
   document.getElementById('questionBox').style.display = 'none';
   document.getElementById('resultSection').style.display = 'block';
-  document.getElementById('resultTitle').textContent = 'Kies jouw traject';
-  document.getElementById('resultSubtitle').textContent = 'Op basis van jouw situatie zijn er twee mogelijke paden. Kies het pad dat het beste bij jou past.';
+  document.getElementById('resultTitle').textContent = isCrisis ? 'Directe hulp' : 'Jouw hulplijn';
+  document.getElementById('resultSubtitle').textContent = isCrisis
+    ? 'Neem meteen contact op met een van deze diensten.'
+    : 'Op basis van je antwoorden passen deze diensten het best bij jouw situatie.';
+
+  const services = serviceIds
+    .map((id) => DATA.services.find((s) => s.id === id))
+    .filter(Boolean);
+
+  const meerInfo = key ? DATA.meer_info[key] : null;
 
   const planBody = document.getElementById('planBody');
   planBody.innerHTML = `
-    <div class="pad-keuze">
-      ${paden.map((pad) => `
-        <div class="pad-kaart" data-pad-id="${pad.id}">
-          <h3>${pad.label}</h3>
-          <p>${pad.beschrijving}</p>
-          <button class="primary kies-pad-btn" data-pad-id="${pad.id}">Dit pad kiezen</button>
+    <div class="service-lijst">
+      ${services.map((s) => `
+        <div class="info-blok contact-blok">
+          <h3>${s.name}</h3>
+          <p>${s.description}</p>
+          <p>Tel: ${s.contact.phone}</p>
+          <p><a href="${s.contact.website}" target="_blank" rel="noopener noreferrer">${s.contact.website}</a></p>
         </div>
       `).join('')}
     </div>
-  `;
-
-  document.querySelectorAll('.kies-pad-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const padId = btn.getAttribute('data-pad-id');
-      const pad = paden.find((p) => p.id === padId);
-      gekozenPad = pad;
-      renderTraject(pad);
-    });
-  });
-}
-
-function renderTraject(pad) {
-  document.getElementById('resultTitle').textContent = pad.label;
-  document.getElementById('resultSubtitle').textContent = pad.beschrijving;
-
-  const planBody = document.getElementById('planBody');
-  planBody.innerHTML = `
-    <div class="traject-wrap">
-      <div class="sectie-titel">Jouw stappen</div>
-      <ul class="stap-lijst" id="stapLijst">
-        ${pad.stappen.map((stap, i) => `
-          <li class="stap-item${stap.gedaan ? ' gedaan' : ''}" data-index="${i}">
-            <button class="stap-check" aria-label="Stap afvinken" data-index="${i}">
-              <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
-                <path class="vink" d="M5.5 10l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-            <span class="stap-tekst">${stap.tekst}</span>
-          </li>
-        `).join('')}
-      </ul>
-
+    ${meerInfo ? `
       <div class="info-blok">
-        <h3>Welke documenten heb je nodig?</h3>
-        <ul class="doc-lijst">
-          ${pad.documenten.map((doc) => `<li>${doc}</li>`).join('')}
-        </ul>
+        <h3>${meerInfo.tekst}</h3>
+        <p><a href="${meerInfo.link}" target="_blank" rel="noopener noreferrer">${meerInfo.label}</a></p>
       </div>
-
-      <div class="info-blok contact-blok">
-        <h3>Eerste contact</h3>
-        <p><strong>${pad.contact.naam}</strong></p>
-        <p>Tel: ${pad.contact.tel}</p>
-        <p><a href="${pad.contact.website}" target="_blank" rel="noopener noreferrer">${pad.contact.website}</a></p>
-      </div>
-
-      ${pad.vervolg ? `
-        <div class="info-blok vervolg-blok">
-          <h3>${pad.vervolg.vraag}</h3>
-          <div class="vervolg-opties">
-            ${pad.vervolg.opties.map((optie) => `
-              <button class="secondary vervolg-optie-btn" data-vervolg-id="${optie.id}">${optie.label}</button>
-            `).join('')}
-          </div>
-          <div id="vervolgResultaat"></div>
-        </div>
-      ` : ''}
-
-      <div class="acties">
-        <button class="secondary" id="andereKeuzeBtn">Ander pad kiezen</button>
-        <button class="primary" id="restartButton">Opnieuw beginnen</button>
-      </div>
+    ` : ''}
+    <div class="acties">
+      <button class="primary" id="restartButton">Opnieuw beginnen</button>
     </div>
   `;
 
-  document.querySelectorAll('.stap-check').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const index = parseInt(btn.getAttribute('data-index'));
-      gekozenPad.stappen[index].gedaan = !gekozenPad.stappen[index].gedaan;
-      const item = document.querySelector(`.stap-item[data-index="${index}"]`);
-      item.classList.toggle('gedaan', gekozenPad.stappen[index].gedaan);
-    });
-  });
-
-  if (pad.vervolg) {
-    document.querySelectorAll('.vervolg-optie-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const optieId = btn.getAttribute('data-vervolg-id');
-        const optie = pad.vervolg.opties.find((o) => o.id === optieId);
-        renderVervolgResultaat(optie);
-      });
-    });
-  }
-
-  document.getElementById('andereKeuzeBtn').addEventListener('click', () => renderPadKeuze());
   document.getElementById('restartButton').addEventListener('click', restartFlow);
 }
 
-function renderVervolgResultaat(optie) {
-  const vervolgResultaat = document.getElementById('vervolgResultaat');
-  vervolgResultaat.innerHTML = `
-    <div class="vervolg-resultaat-inner">
-      <h4>${optie.titel}</h4>
-      <ul class="doc-lijst">
-        ${optie.stappen.map((stap) => `<li>${stap}</li>`).join('')}
-      </ul>
-    </div>
-  `;
-}
-
 function restartFlow() {
-  currentQuestionIndex = 0;
   answers = {};
-  gekozenPad = null;
-  renderQuestion();
+  showStep('crisis');
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  renderQuestion();
-});
+window.addEventListener('DOMContentLoaded', init);
