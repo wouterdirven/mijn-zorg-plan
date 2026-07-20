@@ -216,6 +216,7 @@ function renderResult() {
 
   const planBody = document.getElementById('planBody');
   planBody.innerHTML = `
+    ${renderStappenplan(getStappenplan(key))}
     <div class="service-lijst">
       ${services.map((s) => `
         <div class="info-blok contact-blok">
@@ -246,3 +247,29 @@ function restartFlow() {
 }
 
 window.addEventListener('DOMContentLoaded', init);
+
+function getStappenplan(key) {
+  if (!DATA || !DATA.stappenplannen) return DATA && DATA.stappenplannen && DATA.stappenplannen.fallback || null;
+  return DATA.stappenplannen[key] || DATA.stappenplannen.fallback || null;
+}
+
+function renderStappenplan(plan) {
+  if (!plan) return '';
+  const stappenHTML = plan.stappen
+    .map((s, i) => `<li><span class="stap-nummer">${i + 1}</span>${s}</li>`)
+    .join('');
+  const documentenHTML = plan.documenten && plan.documenten.length
+    ? `<div class="documenten-blok">
+        <h4>Wat heb je nodig?</h4>
+        <ul class="documenten-lijst">${plan.documenten.map(d => `<li>${d}</li>`).join('')}</ul>
+       </div>`
+    : '';
+  return `
+    <div class="stappenplan-blok">
+      <h3>Jouw stappenplan</h3>
+      <p class="stappenplan-intro">${plan.intro}</p>
+      <ol class="stappen-lijst">${stappenHTML}</ol>
+      ${documentenHTML}
+    </div>
+  `;
+}
