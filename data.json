@@ -1407,5 +1407,108 @@
         "description": "Awel jongeren (24/7)"
       }
     ]
+  },
+  "stappenplannen": {
+    "fallback": {
+      "intro": "Op basis van jouw antwoorden tonen we je de meest geschikte hulp. Hier zijn algemene stappen om te starten.",
+      "stappen": [
+        "Neem contact op met de eerste dienst in de lijst hieronder",
+        "Leg je situatie kort uit en vraag wat zij voor jou kunnen betekenen",
+        "Vraag naar een eerste afspraak of intake",
+        "Noteer de naam van je contactpersoon en de afspraakdatum",
+        "Bereid je voor door op te schrijven wat je wil bespreken"
+      ],
+      "documenten": [
+        "Identiteitskaart",
+        "Eventuele eerdere verslagen of attesten"
+      ]
+    },
+    "jongere_laagdrempelig_mentaal_angst": {
+      "intro": "Je ervaart angst of stress en zoekt als jongere een eerste stap naar hulp. Dit zijn de stappen die meestal helpen.",
+      "stappen": [
+        "Praat met iemand die je vertrouwt over hoe je je voelt",
+        "Neem contact op met het JAC of CLB voor een vrijblijvend gesprek",
+        "Vertel eerlijk wat je ervaart, ook als het moeilijk is",
+        "Vraag naar begeleiding op maat, je hoeft niet alles in één gesprek te vertellen",
+        "Maak een afspraak voor opvolging en kom terug als het niet beter gaat"
+      ],
+      "documenten": [
+        "Identiteitskaart of verhaal in eigen woorden"
+      ]
+    },
+    "jongere_laagdrempelig_mentaal_depressie": {
+      "intro": "Je voelt je somber of down als jongere. Dit zijn de stappen om hulp te zoeken.",
+      "stappen": [
+        "Erken dat je hulp nodig hebt, dat is de moeilijkste maar belangrijkste stap",
+        "Neem contact op met JAC, CLB of je huisarts",
+        "Vertel wat je ervaart: hoe lang al, hoe erg, wat helpt of niet helpt",
+        "Vraag door naar wat de volgende stap is na het eerste gesprek",
+        "Zorg voor dagelijkse structuur: slaap, eten, beweging, sociale contacten"
+      ],
+      "documenten": [
+        "Identiteitskaart",
+        "Eventueel een briefje van je huisarts"
+      ]
+    },
+    "ouder_laagdrempelig_school_pesten": {
+      "intro": "Je kind wordt gepest op school. Dit zijn de stappen die meestal helpen.",
+      "stappen": [
+        "Praat rustig met je kind over wat er precies gebeurt en hoe het zich voelt",
+        "Noteer concrete voorvallen met datum, plaats en namen",
+        "Neem contact op met de klastitularis of de directie van de school",
+        "Vraag een gesprek aan en bespreek welke aanpak de school zal volgen",
+        "Schakel het CLB in als het pestgedrag aanhoudt na schoolinterventie",
+        "Vraag een concrete opvolgafspraak binnen 2 weken"
+      ],
+      "documenten": [
+        "Notities van voorvallen (datum, omschrijving)",
+        "Eventuele berichten of bewijzen (screenshots)",
+        "Contactgegevens van de school en het CLB"
+      ]
+    },
+    "ouder_laagdrempelig_opvoeding_gedrag": {
+      "intro": "Je hebt vragen over het gedrag van je kind. Dit zijn de stappen om ondersteuning te zoeken.",
+      "stappen": [
+        "Beschrijf het gedrag zo concreet mogelijk: wanneer, hoe vaak, wat lokt het uit",
+        "Neem contact op met het CLB of een opvoedingswinkel in je buurt",
+        "Vraag naar een opvoedingsgesprek of gezinsbegeleiding",
+        "Bespreek ook wat goed gaat, niet alleen wat moeilijk loopt",
+        "Vraag naar praktische tips en een vervolgafspraak"
+      ],
+      "documenten": [
+        "Eventuele verslagen van school of arts",
+        "Eigen notities over het gedrag"
+      ]
+    },
+    "volwassene_laagdrempelig_financieel_schulden": {
+      "intro": "Je hebt schulden of financiële problemen. Dit zijn de stappen om orde op zaken te stellen.",
+      "stappen": [
+        "Maak een overzicht van al je schulden: aan wie, hoeveel, hoe lang",
+        "Open alle post, ook de onaangename brieven",
+        "Neem contact op met het OCMW of een schuldhulpverlener in je gemeente",
+        "Vraag naar budgetbegeleiding of schuldbemiddeling",
+        "Contacteer je schuldeisers zelf om een afbetalingsplan te vragen als het nog niet te laat is",
+        "Vraag na of je recht hebt op sociale voordelen die je nog niet ontvangt"
+      ],
+      "documenten": [
+        "Alle aanmaningen en brieven van schuldeisers",
+        "Overzicht van inkomsten en uitgaven",
+        "Identiteitskaart",
+        "Bankafschriften van de laatste 3 maanden"
+      ]
+    },
+    "volwassene_laagdrempelig_relaties_relatieproblemen": {
+      "intro": "Je hebt problemen in je relatie of thuis. Dit zijn de stappen om hulp te zoeken.",
+      "stappen": [
+        "Zoek een rustig moment om met je partner te praten over wat je ervaart",
+        "Neem contact op met het CAW voor een gratis en vertrouwelijk gesprek",
+        "Vraag naar relatiebemiddeling of gezinstherapie",
+        "Geef aan of er ook kinderen betrokken zijn, dit beïnvloedt welke hulp mogelijk is",
+        "Maak een afspraak en kom beide partners indien mogelijk"
+      ],
+      "documenten": [
+        "Identiteitskaart"
+      ]
+    }
   }
 }
