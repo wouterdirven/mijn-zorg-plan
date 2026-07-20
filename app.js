@@ -216,7 +216,7 @@ function renderResult() {
 
   const planBody = document.getElementById('planBody');
   planBody.innerHTML = `
-    ${renderStappenplan(getStappenplan(key))}
+    ${renderStappenplan(getStappenplan(key), answers)}
     <div class="service-lijst">
       ${services.map((s) => `
         <div class="info-blok contact-blok">
@@ -253,17 +253,111 @@ function getStappenplan(key) {
   return DATA.stappenplannen[key] || DATA.stappenplannen.fallback || null;
 }
 
-function renderStappenplan(plan) {
+const VOOR_WIE_LABELS = {
+  jongere: 'jezelf als jongere (12-25 jaar)',
+  volwassene: 'jezelf als volwassene (25+)',
+  ouder: 'je kind (als ouder of verzorger)',
+};
+
+const EERDER_HULP_LABELS = {
+  laagdrempelig: 'Je zoekt voor het eerst hulp.',
+  tussenliggend: 'Je hebt al eerder hulp gezocht (bij huisarts of school).',
+  specialist: 'Je wil nu gespecialiseerde hulp.',
+};
+
+const THEMA_LABELS = {
+  mentaal: 'mentale gezondheid',
+  relaties: 'relaties en geweld',
+  school: 'school of werk',
+  opvoeding: 'opvoeding en gezin',
+  verslaving: 'verslaving of financiën',
+};
+
+const SUB_LABELS = {
+  angst: 'angst of paniekaanvallen',
+  depressie: 'somberheid of depressieve gevoelens',
+  stress: 'stress of overspannenheid',
+  eetstoornis: 'eetstoornissen',
+  anders: 'andere mentale klachten',
+  relatieproblemen: 'relatieproblemen',
+  familie: 'familieconflicten',
+  eenzaamheid: 'eenzaamheid',
+  lichamelijk_geweld: 'lichamelijk of psychisch geweld',
+  pesten: 'pesten of onveilig gevoel',
+  leerproblemen: 'leerproblemen of concentratie',
+  studiestress: 'studiestress of faalangst',
+  werkzoeken: 'werk zoeken of loopbaan',
+  baby: 'een kind van 0-3 jaar',
+  kind: 'een kind van 3-12 jaar',
+  tiener: 'een kind van 12 jaar of ouder',
+  gedrag: 'gedrag of emoties',
+  ontwikkeling: 'ontwikkeling of school',
+  opvoeden: 'hoe op te voeden',
+  gezin: 'gezinssituatie (scheiding, stress)',
+  drugs: 'drugs of alcohol',
+  gokken: 'gokken',
+  schulden: 'schulden of financiële problemen',
+};
+
+const URGENTIE_LABELS = {
+  zeer_urgent: 'De situatie voelt crisis-achtig aan.',
+  redelijk_urgent: 'Je maakt je zorgen.',
+  niet_urgent: 'Het is niet acuut, maar je wil hulp.',
+};
+
+function buildContextStappen(a) {
+  const stappen = [];
+
+  if (a.voor_wie) {
+    stappen.push(`Je zoekt hulp voor ${VOOR_WIE_LABELS[a.voor_wie] || a.voor_wie}.`);
+  }
+
+  if (a.eerder_hulp) {
+    stappen.push(EERDER_HULP_LABELS[a.eerder_hulp] || '');
+  }
+
+  if (a.thema) {
+    const themaLabel = THEMA_LABELS[a.thema] || a.thema;
+    const subKey = a.mentaal_sub1 || a.relaties_sub1 || a.school_sub1 || a.ouder_school_sub1 || a.verslaving_sub1;
+    const subLabel = subKey ? SUB_LABELS[subKey] || subKey : null;
+    if (subLabel) {
+      stappen.push(`Je thema is ${themaLabel}, meer specifiek: ${subLabel}.`);
+    } else {
+      stappen.push(`Je thema is ${themaLabel}.`);
+    }
+  }
+
+  if (a.urgentie) {
+    stappen.push(URGENTIE_LABELS[a.urgentie] || '');
+  }
+
+  if (a.opvoeding_sub1 && a.opvoeding_sub2) {
+    stappen.push(`Het gaat over ${SUB_LABELS[a.opvoeding_sub1] || a.opvoeding_sub1} en je zorgen zijn rond ${SUB_LABELS[a.opvoeding_sub2] || a.opvoeding_sub2}.`);
+  }
+
+  return stappen.filter(Boolean);
+}
+
+function renderStappenplan(plan, a = {}) {
   if (!plan) return '';
-  const stappenHTML = plan.stappen
-    .map((s, i) => `<li><span class="stap-nummer">${i + 1}</span>${s}</li>`)
+
+  const contextStappen = buildContextStappen(a);
+  const alleStappen = [...contextStappen, ...plan.stappen];
+
+  const stappenHTML = alleStappen
+    .map((s, i) => {
+      const isContext = i < contextStappen.length;
+      return `<li class="${isContext ? 'stap-context' : 'stap-actie'}"><span class="stap-nummer">${i + 1}</span>${s}</li>`;
+    })
     .join('');
+
   const documentenHTML = plan.documenten && plan.documenten.length
     ? `<div class="documenten-blok">
         <h4>Wat heb je nodig?</h4>
         <ul class="documenten-lijst">${plan.documenten.map(d => `<li>${d}</li>`).join('')}</ul>
        </div>`
     : '';
+
   return `
     <div class="stappenplan-blok">
       <h3>Jouw stappenplan</h3>
