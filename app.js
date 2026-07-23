@@ -4,7 +4,7 @@ let answers = {};
 async function init() {
   DATA = await fetch('data.json').then((r) => r.json());
   renderCrisisBanner();
-  showStep('crisis');
+  showStep('voor_wie');
 }
 
 function renderCrisisBanner() {
@@ -15,39 +15,17 @@ function renderCrisisBanner() {
     <div class="crisis-items">
       ${DATA.crisis_info.services.map((s) => `<span>${s.name} - ${s.description}</span>`).join('')}
     </div>
+    <button type="button" class="crisis-direct-btn" id="crisisDirectBtn">Ik heb nu direct gevaar — toon spoedhulp</button>
   `;
+  document.getElementById('crisisDirectBtn').addEventListener('click', () => {
+    answers.routeOverride = 'crisis';
+    showStep('result');
+  });
 }
 
 function showStep(stepId) {
-  if (stepId === 'crisis') return renderCrisisQuestion();
   if (stepId === 'result') return renderResult();
   renderGenericQuestion(stepId);
-}
-
-function renderCrisisQuestion() {
-  const q = DATA.questions.crisis;
-  document.getElementById('questionBox').style.display = 'block';
-  document.getElementById('resultSection').style.display = 'none';
-  document.getElementById('progressText').textContent = 'Eerste vraag';
-  document.getElementById('progressFill').style.width = '10%';
-  document.getElementById('questionTitle').textContent = q.text;
-
-  const optionsContainer = document.getElementById('options');
-  optionsContainer.innerHTML = '';
-  q.options.forEach((opt) => {
-    const button = document.createElement('button');
-    button.className = 'option-button';
-    button.textContent = opt.label;
-    button.addEventListener('click', () => {
-      if (opt.value === 'ja') {
-        answers.routeOverride = 'crisis';
-        showStep('result');
-      } else {
-        showStep('voor_wie');
-      }
-    });
-    optionsContainer.appendChild(button);
-  });
 }
 
 function getQuestionDef(stepId) {
@@ -55,7 +33,7 @@ function getQuestionDef(stepId) {
   return DATA.questions[stepId];
 }
 
-const STEP_ORDER = ['voor_wie', 'eerder_hulp', 'thema'];
+const STEP_ORDER = ['voor_wie', 'thema'];
 
 function renderGenericQuestion(stepId) {
   const q = getQuestionDef(stepId);
@@ -66,8 +44,8 @@ function renderGenericQuestion(stepId) {
 
   const stepIndex = STEP_ORDER.indexOf(stepId);
   if (stepIndex >= 0) {
-    document.getElementById('progressText').textContent = `Vraag ${stepIndex + 2}`;
-    document.getElementById('progressFill').style.width = `${((stepIndex + 2) / 6) * 100}%`;
+    document.getElementById('progressText').textContent = `Vraag ${stepIndex + 1}`;
+    document.getElementById('progressFill').style.width = `${((stepIndex + 1) / 5) * 100}%`;
   } else {
     document.getElementById('progressText').textContent = 'Nog even doorvragen';
     document.getElementById('progressFill').style.width = '80%';
@@ -92,8 +70,6 @@ function renderGenericQuestion(stepId) {
 function determineNext(stepId, value) {
   switch (stepId) {
     case 'voor_wie':
-      return showStep('eerder_hulp');
-    case 'eerder_hulp':
       return showStep('thema');
     case 'thema':
       if (value === 'mentaal') return showStep('mentaal_sub1');
@@ -104,10 +80,8 @@ function determineNext(stepId, value) {
       return showStep('result');
     case 'mentaal_sub1':
       if (value === 'zelfmoord') { answers.routeOverride = 'zelfmoord'; return showStep('result'); }
-      if (value === 'angst' || value === 'depressie') return showStep('urgentie');
+      if (value === 'angst' || value === 'depressie') return showStep('result');
       if (value === 'anders') return showStep('mentaal_sub2');
-      return showStep('result');
-    case 'urgentie':
       return showStep('result');
     case 'mentaal_sub2':
       return showStep('result');
@@ -130,8 +104,6 @@ function determineNext(stepId, value) {
     case 'opvoeding_sub2':
       return showStep('result');
     case 'verslaving_sub1':
-      return showStep('verslaving_sub2');
-    case 'verslaving_sub2':
       return showStep('result');
     default:
       return showStep('result');
@@ -139,13 +111,12 @@ function determineNext(stepId, value) {
 }
 
 function buildCandidateKeys() {
-  const { voor_wie, eerder_hulp, thema } = answers;
-  const parts = [voor_wie, eerder_hulp, thema];
+  const { voor_wie, thema } = answers;
+  const parts = [voor_wie, thema];
 
   if (thema === 'mentaal') {
     if (answers.mentaal_sub1 === 'angst' || answers.mentaal_sub1 === 'depressie') {
       parts.push(answers.mentaal_sub1);
-      if (answers.urgentie) parts.push(answers.urgentie);
     } else if (answers.mentaal_sub1 === 'stress') {
       parts.push('stress');
     } else if (answers.mentaal_sub1 === 'eetstoornis') {
@@ -168,11 +139,10 @@ function buildCandidateKeys() {
     if (answers.opvoeding_sub2) parts.push(answers.opvoeding_sub2);
   } else if (thema === 'verslaving') {
     if (answers.verslaving_sub1) parts.push(answers.verslaving_sub1);
-    if (answers.verslaving_sub2 === 'ernstig') parts.push('ernstig');
   }
 
   const keys = [];
-  for (let i = parts.length; i >= 3; i -= 1) {
+  for (let i = parts.length; i >= 2; i -= 1) {
     keys.push(parts.slice(0, i).join('_'));
   }
   return keys;
@@ -198,52 +168,213 @@ function resolveServices() {
   return { key: null, serviceIds: ['huisarts', 'caw', 'tele-onthaal'] };
 }
 
+function getServiceMeta(serviceId) {
+  return (DATA.service_meta && DATA.service_meta[serviceId]) || {};
+}
+
+function getContactType(typeKey) {
+  return (DATA.contact_types && DATA.contact_types[typeKey]) || DATA.contact_types.afspraak;
+}
+
 function renderResult() {
   const { key, serviceIds, isCrisis } = resolveServices();
 
   document.getElementById('questionBox').style.display = 'none';
   document.getElementById('resultSection').style.display = 'block';
-  document.getElementById('resultTitle').textContent = isCrisis ? 'Directe hulp' : 'Jouw hulplijn';
+  document.getElementById('resultTitle').textContent = isCrisis ? 'Directe hulp' : 'Jouw zorgplan';
   document.getElementById('resultSubtitle').textContent = isCrisis
-    ? 'Neem meteen contact op met een van deze diensten.'
-    : 'Op basis van je antwoorden passen deze diensten het best bij jouw situatie.';
+    ? 'Neem meteen contact op. Hieronder zie je wat je kan verwachten en wie je kan bellen.'
+    : 'Op basis van je antwoorden: wat je kan verwachten, wat je meeneemt, en waar je start.';
 
   const services = serviceIds
     .map((id) => DATA.services.find((s) => s.id === id))
     .filter(Boolean);
 
+  const plan = getStappenplan(key);
+  const primaryService = services[0];
+  const primaryType = primaryService
+    ? getContactType(getServiceMeta(primaryService.id).contact_type || 'afspraak')
+    : getContactType('afspraak');
   const meerInfo = key ? DATA.meer_info[key] : null;
 
   const planBody = document.getElementById('planBody');
   planBody.innerHTML = `
-    ${renderStappenplan(getStappenplan(key), answers)}
-    <div class="service-lijst">
-      ${services.map((s) => `
-        <div class="info-blok contact-blok">
-          <h3>${s.name}</h3>
-          <p>${s.description}</p>
-          <p>Tel: ${s.contact.phone}</p>
-          <p><a href="${s.contact.website}" target="_blank" rel="noopener noreferrer">${s.contact.website}</a></p>
-        </div>
-      `).join('')}
-    </div>
-    ${meerInfo ? `
-      <div class="info-blok">
-        <h3>${meerInfo.tekst}</h3>
-        <p><a href="${meerInfo.link}" target="_blank" rel="noopener noreferrer">${meerInfo.label}</a></p>
-      </div>
-    ` : ''}
+    ${renderSituatieSamenvatting()}
+    ${renderVerwachtingBlok(primaryType, primaryService, isCrisis)}
+    ${renderStappenplan(plan, answers)}
+    ${renderMeenemenBlok(plan, primaryType, services)}
+    ${renderDienstenSectie(services, isCrisis)}
+    ${renderVervolgoptiesBlok(plan, services, isCrisis)}
+    ${meerInfo ? renderMeerInfo(meerInfo) : ''}
     <div class="acties">
       <button class="primary" id="restartButton">Opnieuw beginnen</button>
     </div>
   `;
 
+  bindStapCheckboxes();
   document.getElementById('restartButton').addEventListener('click', restartFlow);
+}
+
+function renderSituatieSamenvatting() {
+  const stappen = buildContextStappen(answers);
+  if (!stappen.length) return '';
+
+  return `
+    <div class="result-sectie">
+      <p class="sectie-titel">Jouw situatie</p>
+      <div class="situatie-blok">
+        <ul class="situatie-lijst">
+          ${stappen.map((s) => `<li>${s}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+function renderVerwachtingBlok(contactType, primaryService, isCrisis) {
+  const meta = primaryService ? getServiceMeta(primaryService.id) : {};
+  const verwachting = meta.verwachting || contactType.verwachting;
+  const verloop = contactType.verloop || [];
+
+  return `
+    <div class="result-sectie">
+      <p class="sectie-titel">Wat je kan verwachten</p>
+      <div class="verwachting-blok">
+        ${primaryService ? `
+          <div class="verwachting-header">
+            <span class="type-badge">${contactType.label}</span>
+            ${meta.rol ? `<span class="rol-tekst">${meta.rol}</span>` : ''}
+          </div>
+        ` : ''}
+        <p class="verwachting-tekst">${verwachting}</p>
+        ${verloop.length ? `
+          <div class="verloop-stappen">
+            <p class="verloop-label">Typisch verloop:</p>
+            <ol class="verloop-lijst">
+              ${verloop.map((stap) => `<li>${stap}</li>`).join('')}
+            </ol>
+          </div>
+        ` : ''}
+        ${contactType.kosten ? `<p class="kosten-tekst"><strong>Kosten:</strong> ${contactType.kosten}</p>` : ''}
+        ${isCrisis ? '<p class="crisis-noot">Bij onmiddellijk levensgevaar: bel <strong>112</strong>.</p>' : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderMeenemenBlok(plan, contactType, services) {
+  const planDocs = (plan && plan.documenten) || [];
+  const typeDocs = contactType.meenemen || [];
+  const allDocs = [...new Set([...planDocs, ...typeDocs])];
+
+  if (!allDocs.length) return '';
+
+  return `
+    <div class="result-sectie">
+      <p class="sectie-titel">Wat neem je mee?</p>
+      <div class="info-blok meenemen-blok">
+        <p class="meenemen-intro">Voor je eerste contact — niets moet perfect, maar dit helpt:</p>
+        <ul class="doc-lijst">
+          ${allDocs.map((d) => `<li>${d}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+function renderDienstenSectie(services, isCrisis) {
+  if (!services.length) return '';
+
+  return `
+    <div class="result-sectie">
+      <p class="sectie-titel">${isCrisis ? 'Bel direct' : 'Waar start je?'}</p>
+      <p class="sectie-uitleg">${isCrisis
+        ? 'Deze nummers zijn 24/7 bereikbaar. Je hoeft je naam niet te geven.'
+        : 'Begin bij de bovenste dienst. Past die niet? Probeer de volgende — elke dienst is een andere ingang.'}</p>
+      <div class="dienst-lijst">
+        ${services.map((s, i) => renderDienstKaart(s, i, isCrisis)).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderDienstKaart(service, index, isCrisis) {
+  const meta = getServiceMeta(service.id);
+  const type = getContactType(meta.contact_type || 'afspraak');
+  const isPrimary = index === 0;
+  const badge = isCrisis
+    ? 'Spoed'
+    : isPrimary
+      ? 'Start hier'
+      : `Alternatief ${index}`;
+
+  return `
+    <div class="dienst-kaart ${isPrimary ? 'dienst-kaart-primary' : ''}">
+      <div class="dienst-kaart-header">
+        <span class="dienst-badge ${isPrimary ? 'dienst-badge-primary' : ''}">${badge}</span>
+        <span class="type-badge type-badge-klein">${type.label}</span>
+      </div>
+      <h3>${service.name}</h3>
+      <p class="dienst-beschrijving">${service.description}</p>
+      ${meta.rol ? `<p class="dienst-rol">${meta.rol}</p>` : ''}
+      <div class="dienst-contact">
+        <p><strong>Telefoon:</strong> ${service.contact.phone}</p>
+        ${service.contact.email && service.contact.email !== 'Via website' ? `<p><strong>E-mail:</strong> ${service.contact.email}</p>` : ''}
+        <p><a href="${service.contact.website}" target="_blank" rel="noopener noreferrer">Website bezoeken →</a></p>
+      </div>
+    </div>
+  `;
+}
+
+function renderVervolgoptiesBlok(plan, services, isCrisis) {
+  const opties = (plan && plan.vervolgopties) || (DATA.stappenplannen.fallback && DATA.stappenplannen.fallback.vervolgopties) || [];
+  const alternatiefNamen = services.slice(1, 3).map((s) => s.name);
+
+  let extraOpties = [];
+  if (alternatiefNamen.length && !isCrisis) {
+    extraOpties.push(`Alternatief: probeer ${alternatiefNamen.join(' of ')} als de eerste dienst niet past.`);
+  }
+
+  const alleOpties = [...opties, ...extraOpties];
+  if (!alleOpties.length) return '';
+
+  return `
+    <div class="result-sectie">
+      <p class="sectie-titel">Als dit niet helpt — wat nu?</p>
+      <div class="vervolg-blok">
+        <p class="vervolg-intro">Je bent niet aangewezen op één dienst. Dit zijn je opties als de eerste stap niet werkt:</p>
+        <ul class="vervolg-lijst">
+          ${alleOpties.map((o) => `<li>${o}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+function renderMeerInfo(meerInfo) {
+  return `
+    <div class="result-sectie">
+      <p class="sectie-titel">Meer lezen</p>
+      <div class="info-blok">
+        <p>${meerInfo.tekst}</p>
+        <p><a href="${meerInfo.link}" target="_blank" rel="noopener noreferrer">${meerInfo.label} →</a></p>
+      </div>
+    </div>
+  `;
+}
+
+function bindStapCheckboxes() {
+  document.querySelectorAll('.stap-check').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.stap-item');
+      if (item) item.classList.toggle('gedaan');
+    });
+  });
 }
 
 function restartFlow() {
   answers = {};
-  showStep('crisis');
+  showStep('voor_wie');
 }
 
 window.addEventListener('DOMContentLoaded', init);
@@ -257,12 +388,6 @@ const VOOR_WIE_LABELS = {
   jongere: 'jezelf als jongere (12-25 jaar)',
   volwassene: 'jezelf als volwassene (25+)',
   ouder: 'je kind (als ouder of verzorger)',
-};
-
-const EERDER_HULP_LABELS = {
-  laagdrempelig: 'Je zoekt voor het eerst hulp.',
-  tussenliggend: 'Je hebt al eerder hulp gezocht (bij huisarts of school).',
-  specialist: 'Je wil nu gespecialiseerde hulp.',
 };
 
 const THEMA_LABELS = {
@@ -299,21 +424,11 @@ const SUB_LABELS = {
   schulden: 'schulden of financiële problemen',
 };
 
-const URGENTIE_LABELS = {
-  zeer_urgent: 'De situatie voelt crisis-achtig aan.',
-  redelijk_urgent: 'Je maakt je zorgen.',
-  niet_urgent: 'Het is niet acuut, maar je wil hulp.',
-};
-
 function buildContextStappen(a) {
   const stappen = [];
 
   if (a.voor_wie) {
     stappen.push(`Je zoekt hulp voor ${VOOR_WIE_LABELS[a.voor_wie] || a.voor_wie}.`);
-  }
-
-  if (a.eerder_hulp) {
-    stappen.push(EERDER_HULP_LABELS[a.eerder_hulp] || '');
   }
 
   if (a.thema) {
@@ -327,10 +442,6 @@ function buildContextStappen(a) {
     }
   }
 
-  if (a.urgentie) {
-    stappen.push(URGENTIE_LABELS[a.urgentie] || '');
-  }
-
   if (a.opvoeding_sub1 && a.opvoeding_sub2) {
     stappen.push(`Het gaat over ${SUB_LABELS[a.opvoeding_sub1] || a.opvoeding_sub1} en je zorgen zijn rond ${SUB_LABELS[a.opvoeding_sub2] || a.opvoeding_sub2}.`);
   }
@@ -341,29 +452,31 @@ function buildContextStappen(a) {
 function renderStappenplan(plan, a = {}) {
   if (!plan) return '';
 
-  const contextStappen = buildContextStappen(a);
-  const alleStappen = [...contextStappen, ...plan.stappen];
+  const actieStappen = plan.stappen || [];
+  if (!actieStappen.length) return '';
 
-  const stappenHTML = alleStappen
-    .map((s, i) => {
-      const isContext = i < contextStappen.length;
-      return `<li class="${isContext ? 'stap-context' : 'stap-actie'}"><span class="stap-nummer">${i + 1}</span>${s}</li>`;
-    })
+  const stappenHTML = actieStappen
+    .map((s, i) => `
+      <li class="stap-item">
+        <button class="stap-check" type="button" aria-label="Stap ${i + 1} afvinken">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M6 10l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <span class="stap-tekst">${s}</span>
+      </li>
+    `)
     .join('');
 
-  const documentenHTML = plan.documenten && plan.documenten.length
-    ? `<div class="documenten-blok">
-        <h4>Wat heb je nodig?</h4>
-        <ul class="documenten-lijst">${plan.documenten.map(d => `<li>${d}</li>`).join('')}</ul>
-       </div>`
-    : '';
-
   return `
-    <div class="stappenplan-blok">
-      <h3>Jouw stappenplan</h3>
-      <p class="stappenplan-intro">${plan.intro}</p>
-      <ol class="stappen-lijst">${stappenHTML}</ol>
-      ${documentenHTML}
+    <div class="result-sectie">
+      <p class="sectie-titel">Jouw stappenplan</p>
+      <div class="stappenplan-blok">
+        <p class="stappenplan-intro">${plan.intro}</p>
+        <ul class="stap-lijst">${stappenHTML}</ul>
+        <p class="stappen-tip">Vink stappen af terwijl je ze zet — zo houd je overzicht.</p>
+      </div>
     </div>
   `;
 }

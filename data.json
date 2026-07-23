@@ -476,21 +476,213 @@
       ]
     }
   ],
-  "questions": {
-    "crisis": {
-      "id": "crisis",
-      "text": "Ben je nu in direct gevaar of heeft iemand anders dat?",
-      "options": [
-        {
-          "value": "ja",
-          "label": "Ja, er is direct gevaar"
-        },
-        {
-          "value": "nee",
-          "label": "Nee"
-        }
-      ]
+  "contact_types": {
+    "luisterlijn": {
+      "label": "Luisterlijn",
+      "verwachting": "Je kan meteen bellen of chatten — geen afspraak nodig. Een getrainde medewerker luistert, stelt vragen en helpt je verder. Gesprekken zijn gratis en meestal anoniem.",
+      "meenemen": [
+        "Niets verplicht — je hoeft je naam niet te geven",
+        "Pen en papier om telefoonnummers of tips te noteren"
+      ],
+      "verloop": [
+        "Je neemt contact op (telefoon of chat)",
+        "Je vertelt kort waar het over gaat",
+        "Je krijgt advies, doorverwijzing of een luisterend oor",
+        "Indien nodig: afspraak of vervolgcontact"
+      ],
+      "kosten": "Gratis"
     },
+    "crisis": {
+      "label": "Spoedhulp",
+      "verwachting": "Je krijgt onmiddellijk hulp. Bij levensgevaar: bel 112. Anders: een gespecialiseerde dienst neemt je situatie serieus en helpt je meteen verder.",
+      "meenemen": [
+        "Niets — veiligheid gaat voor",
+        "Eventueel identiteitskaart als je medische hulp nodig hebt"
+      ],
+      "verloop": [
+        "Onmiddellijk contact",
+        "Beoordeling van je veiligheid",
+        "Directe hulp of doorverwijzing",
+        "Opvolging indien nodig"
+      ],
+      "kosten": "Gratis"
+    },
+    "afspraak": {
+      "label": "Afspraak op locatie",
+      "verwachting": "Je maakt een eerste contact (telefoon, e-mail of online). Daarna volgt een intakegesprek waarin je situatie wordt besproken. Samen bekijken jullie welke hulp past.",
+      "meenemen": [
+        "Identiteitskaart",
+        "Eventuele briefjes of verslagen van huisarts of school",
+        "Notities over je situatie (datum, wat er speelt)"
+      ],
+      "verloop": [
+        "Eerste contact (bellen of online)",
+        "Intakegesprek (30–60 min)",
+        "Samen een plan opstellen",
+        "Opvolgafspraken indien nodig"
+      ],
+      "kosten": "Meestal gratis via CAW, OCMW of je mutualiteit"
+    },
+    "school": {
+      "label": "Via school",
+      "verwachting": "Je neemt contact op via je school (klastitularis, directie of CLB). Zij kennen de context en kunnen discreet begeleiden. Voor ouders: je hoeft niet alles aan je kind te vertellen wat je bespreekt.",
+      "meenemen": [
+        "Naam en klas van je kind (voor ouders)",
+        "Korte beschrijving van wat er speelt",
+        "Eventuele eerdere contacten met school"
+      ],
+      "verloop": [
+        "Contact met school of CLB",
+        "Gesprek met betrokkenen",
+        "Afspraken over aanpak op school",
+        "Eventueel doorverwijzing naar specialist"
+      ],
+      "kosten": "Gratis"
+    },
+    "doorverwijzing": {
+      "label": "Via doorverwijzing",
+      "verwachting": "Gespecialiseerde zorg vraagt meestal een doorverwijzing via je huisarts of CLB. Na verwijzing volgt een intake en behandelplan op maat.",
+      "meenemen": [
+        "Identiteitskaart",
+        "Doorverwijzing of brief van huisarts/CLB",
+        "Mutualiteitskaart",
+        "Lijst van medicatie (indien van toepassing)"
+      ],
+      "verloop": [
+        "Doorverwijzing regelen (huisarts/CLB)",
+        "Aanmelding bij gespecialiseerde dienst",
+        "Wachtlijst of intake",
+        "Behandeling of begeleiding op maat"
+      ],
+      "kosten": "Gedeeltelijk terugbetaald via mutualiteit"
+    },
+    "online": {
+      "label": "Online",
+      "verwachting": "Je start via een website: informatie lezen, een chat starten of online hulp aanvragen. Handig als je nog niet wil bellen of geen afspraak wil maken.",
+      "meenemen": [
+        "Geen fysieke documenten nodig",
+        "Eventueel notities over je vragen"
+      ],
+      "verloop": [
+        "Website bezoeken",
+        "Informatie lezen of chat starten",
+        "Eventueel online intake",
+        "Doorverwijzing naar fysieke hulp indien nodig"
+      ],
+      "kosten": "Gratis"
+    }
+  },
+  "service_meta": {
+    "1712": {
+      "contact_type": "crisis",
+      "rol": "Meldpunt bij geweld, misbruik of kindermishandeling"
+    },
+    "clb": {
+      "contact_type": "school",
+      "rol": "Eerste aanspreekpunt op school voor leerlingen en ouders"
+    },
+    "caw": {
+      "contact_type": "afspraak",
+      "rol": "Brede welzijnshulp — vaak je eerste stap"
+    },
+    "jac": {
+      "contact_type": "afspraak",
+      "rol": "Gratis advies specifiek voor jongeren 12–25"
+    },
+    "cgg": {
+      "contact_type": "doorverwijzing",
+      "rol": "Gespecialiseerde psychische zorg voor volwassenen"
+    },
+    "tele-onthaal": {
+      "contact_type": "luisterlijn",
+      "rol": "Anoniem praten wanneer je het nodig hebt"
+    },
+    "huisarts": {
+      "contact_type": "afspraak",
+      "rol": "Eerste medische en psychische aanspreekpunt"
+    },
+    "sensoa": {
+      "contact_type": "afspraak",
+      "rol": "Expertise rond seksualiteit en relaties"
+    },
+    "zelfmoord1813": {
+      "contact_type": "luisterlijn",
+      "rol": "Gespecialiseerde lijn bij zelfmoordgedachten"
+    },
+    "druglijn": {
+      "contact_type": "luisterlijn",
+      "rol": "Anoniem advies over alcohol, drugs en gokken"
+    },
+    "kjg": {
+      "contact_type": "afspraak",
+      "rol": "Ondersteuning voor ouders met jonge kinderen"
+    },
+    "awel": {
+      "contact_type": "luisterlijn",
+      "rol": "Luisterlijn specifiek voor kinderen en jongeren"
+    },
+    "jongerenlijn": {
+      "contact_type": "online",
+      "rol": "Online en telefonisch advies voor jongeren"
+    },
+    "tejo": {
+      "contact_type": "afspraak",
+      "rol": "Preventie rond alcohol, drugs en gokken bij jongeren"
+    },
+    "werkwinkel-vdab": {
+      "contact_type": "afspraak",
+      "rol": "Hulp bij werk zoeken en loopbaan"
+    },
+    "vertrouwenscentrum": {
+      "contact_type": "crisis",
+      "rol": "Medische en psychologische zorg na kindermishandeling"
+    },
+    "caw-teleonthaal": {
+      "contact_type": "luisterlijn",
+      "rol": "Luisterlijn van het CAW"
+    },
+    "integratiedienst": {
+      "contact_type": "afspraak",
+      "rol": "Begeleiding voor nieuwkomers"
+    },
+    "ocmw": {
+      "contact_type": "afspraak",
+      "rol": "Financiële en sociale hulp via je gemeente"
+    },
+    "referentiepersoon": {
+      "contact_type": "school",
+      "rol": "Vertrouwenspersoon op school"
+    },
+    "cgg-jeugd": {
+      "contact_type": "doorverwijzing",
+      "rol": "Gespecialiseerde psychische zorg voor kinderen en jongeren"
+    },
+    "vaph": {
+      "contact_type": "afspraak",
+      "rol": "Ondersteuning bij handicap"
+    },
+    "centrum-seksueel-geweld": {
+      "contact_type": "crisis",
+      "rol": "Spoedzorg na seksueel geweld"
+    },
+    "schuldbemiddeling": {
+      "contact_type": "afspraak",
+      "rol": "Juridische hulp bij schulden"
+    },
+    "eetexpert": {
+      "contact_type": "online",
+      "rol": "Online hulp bij eetstoornissen"
+    },
+    "zorgzoeker": {
+      "contact_type": "online",
+      "rol": "Zelf hulpverleners zoeken in je buurt"
+    },
+    "awel-meldpunt": {
+      "contact_type": "luisterlijn",
+      "rol": "Meldpunt bij zorgen over een kind"
+    }
+  },
+  "questions": {
     "voor_wie": {
       "id": "voor_wie",
       "text": "Voor wie zoek je hulp?",
@@ -524,42 +716,6 @@
         {
           "value": "x",
           "label": "X / Wil ik niet zeggen"
-        }
-      ]
-    },
-    "eerder_hulp": {
-      "id": "eerder_hulp",
-      "text": "Heb je al eerder hulp gezocht?",
-      "options": [
-        {
-          "value": "laagdrempelig",
-          "label": "Nee, dit is de eerste keer"
-        },
-        {
-          "value": "tussenliggend",
-          "label": "Ja, bij huisarts of school"
-        },
-        {
-          "value": "specialist",
-          "label": "Ja, ik wil nu gespecialiseerde hulp"
-        }
-      ]
-    },
-    "urgentie": {
-      "id": "urgentie",
-      "text": "Hoe urgent is de situatie?",
-      "options": [
-        {
-          "value": "zeer_urgent",
-          "label": "Het voelt crisis-achtig aan"
-        },
-        {
-          "value": "redelijk_urgent",
-          "label": "Ik maak me zorgen"
-        },
-        {
-          "value": "niet_urgent",
-          "label": "Het is niet acuut, maar ik wil hulp"
         }
       ]
     },
@@ -826,24 +982,6 @@
           "label": "Iets anders"
         }
       ]
-    },
-    "verslaving_sub2": {
-      "id": "verslaving_sub2",
-      "text": "Hoe ernstig is de situatie?",
-      "options": [
-        {
-          "value": "ernstig",
-          "label": "Ernstig, loop vast"
-        },
-        {
-          "value": "zorgen",
-          "label": "Maak me zorgen, wil hulp"
-        },
-        {
-          "value": "info",
-          "label": "Wil vooral informatie"
-        }
-      ]
     }
   },
   "routing": {
@@ -867,473 +1005,338 @@
       "1712",
       "caw"
     ],
-    "jongere_laagdrempelig_mentaal_angst_zeer_urgent": [
-      "awel",
-      "huisarts",
-      "jac"
-    ],
-    "jongere_laagdrempelig_mentaal_angst_redelijk_urgent": [
+    "jongere_mentaal_angst": [
       "jac",
       "awel",
       "clb"
     ],
-    "jongere_laagdrempelig_mentaal_angst_niet_urgent": [
-      "jac",
-      "jongerenlijn",
-      "clb"
-    ],
-    "jongere_laagdrempelig_mentaal_depressie_zeer_urgent": [
-      "awel",
-      "huisarts",
-      "tele-onthaal"
-    ],
-    "jongere_laagdrempelig_mentaal_depressie_redelijk_urgent": [
+    "jongere_mentaal_depressie": [
       "jac",
       "awel",
       "clb"
     ],
-    "jongere_laagdrempelig_mentaal_depressie_niet_urgent": [
-      "jac",
-      "jongerenlijn",
-      "tele-onthaal"
-    ],
-    "jongere_laagdrempelig_mentaal_stress": [
+    "jongere_mentaal_stress": [
       "clb",
       "jac",
       "referentiepersoon"
     ],
-    "jongere_laagdrempelig_mentaal_eetstoornis": [
+    "jongere_mentaal_eetstoornis": [
       "eetexpert",
       "jac",
       "huisarts"
     ],
-    "jongere_tussenliggend_mentaal_angst": [
-      "cgg-jeugd",
-      "huisarts",
-      "clb"
-    ],
-    "jongere_tussenliggend_mentaal_depressie": [
-      "cgg-jeugd",
-      "huisarts",
-      "zorgzoeker"
-    ],
-    "jongere_tussenliggend_mentaal_ernstig": [
-      "cgg-jeugd",
-      "huisarts"
-    ],
-    "jongere_specialist_mentaal": [
-      "cgg-jeugd",
-      "zorgzoeker"
-    ],
-    "jongere_laagdrempelig_relaties_geweld_onveilig": [
+    "jongere_relaties_geweld_onveilig": [
       "1712",
       "awel",
       "caw"
     ],
-    "jongere_laagdrempelig_relaties_seksueel_geweld": [
+    "jongere_relaties_seksueel_geweld": [
       "centrum-seksueel-geweld",
       "1712",
       "awel"
     ],
-    "jongere_laagdrempelig_relaties_relatieproblemen": [
+    "jongere_relaties_relatieproblemen": [
       "jac",
       "sensoa",
       "jongerenlijn"
     ],
-    "jongere_laagdrempelig_relaties_familie": [
+    "jongere_relaties_familie": [
       "awel",
       "jac",
       "caw"
     ],
-    "jongere_laagdrempelig_relaties_eenzaamheid": [
+    "jongere_relaties_eenzaamheid": [
       "jongerenlijn",
       "jac",
       "tele-onthaal"
     ],
-    "jongere_tussenliggend_relaties_geweld": [
-      "vertrouwenscentrum",
-      "1712",
-      "cgg-jeugd"
-    ],
-    "jongere_specialist_relaties": [
-      "cgg-jeugd",
-      "centrum-seksueel-geweld"
-    ],
-    "jongere_laagdrempelig_school_pesten_veel": [
+    "jongere_school_pesten_veel": [
       "clb",
       "awel",
       "referentiepersoon"
     ],
-    "jongere_laagdrempelig_school_pesten": [
+    "jongere_school_pesten": [
       "clb",
       "referentiepersoon",
       "awel"
     ],
-    "jongere_laagdrempelig_school_leerproblemen": [
+    "jongere_school_leerproblemen": [
       "clb",
       "referentiepersoon"
     ],
-    "jongere_laagdrempelig_school_studiestress": [
+    "jongere_school_studiestress": [
       "clb",
       "jac",
       "referentiepersoon"
     ],
-    "jongere_laagdrempelig_school_werkzoeken": [
+    "jongere_school_werkzoeken": [
       "werkwinkel-vdab",
       "jac"
     ],
-    "jongere_tussenliggend_school": [
-      "clb",
-      "cgg-jeugd",
-      "vaph"
-    ],
-    "jongere_specialist_school": [
-      "cgg-jeugd",
-      "vaph"
-    ],
-    "jongere_laagdrempelig_verslaving_drugs_ernstig": [
-      "druglijn",
-      "caw",
-      "huisarts"
-    ],
-    "jongere_laagdrempelig_verslaving_drugs": [
+    "jongere_verslaving_drugs": [
       "druglijn",
       "tejo",
       "jac"
     ],
-    "jongere_tussenliggend_verslaving": [
-      "druglijn",
-      "cgg-jeugd",
-      "caw"
-    ],
-    "jongere_specialist_verslaving": [
-      "cgg-jeugd",
-      "druglijn"
-    ],
-    "volwassene_laagdrempelig_mentaal_angst_zeer_urgent": [
-      "huisarts",
-      "tele-onthaal",
-      "caw"
-    ],
-    "volwassene_laagdrempelig_mentaal_angst": [
+    "volwassene_mentaal_angst": [
       "tele-onthaal",
       "caw",
       "huisarts"
     ],
-    "volwassene_laagdrempelig_mentaal_depressie_zeer_urgent": [
-      "huisarts",
-      "tele-onthaal"
-    ],
-    "volwassene_laagdrempelig_mentaal_depressie": [
+    "volwassene_mentaal_depressie": [
       "tele-onthaal",
       "caw",
       "huisarts"
     ],
-    "volwassene_laagdrempelig_mentaal_stress": [
+    "volwassene_mentaal_stress": [
       "tele-onthaal",
       "huisarts",
       "caw"
     ],
-    "volwassene_laagdrempelig_mentaal_eetstoornis": [
+    "volwassene_mentaal_eetstoornis": [
       "eetexpert",
       "huisarts"
     ],
-    "volwassene_tussenliggend_mentaal_ernstig": [
-      "huisarts",
-      "cgg",
-      "zorgzoeker"
-    ],
-    "volwassene_tussenliggend_mentaal": [
-      "huisarts",
-      "cgg",
-      "zorgzoeker"
-    ],
-    "volwassene_specialist_mentaal": [
-      "cgg",
-      "zorgzoeker"
-    ],
-    "volwassene_laagdrempelig_relaties_geweld_onveilig": [
+    "volwassene_relaties_geweld_onveilig": [
       "1712",
       "caw"
     ],
-    "volwassene_laagdrempelig_relaties_seksueel_geweld": [
+    "volwassene_relaties_seksueel_geweld": [
       "centrum-seksueel-geweld",
       "1712",
       "caw"
     ],
-    "volwassene_laagdrempelig_relaties_relatieproblemen": [
+    "volwassene_relaties_relatieproblemen": [
       "caw",
       "sensoa"
     ],
-    "volwassene_laagdrempelig_relaties_familie": [
+    "volwassene_relaties_familie": [
       "caw",
       "tele-onthaal"
     ],
-    "volwassene_laagdrempelig_relaties_eenzaamheid": [
+    "volwassene_relaties_eenzaamheid": [
       "tele-onthaal",
       "caw"
     ],
-    "volwassene_tussenliggend_relaties_geweld": [
-      "caw",
-      "vertrouwenscentrum",
-      "cgg"
-    ],
-    "volwassene_tussenliggend_relaties": [
-      "caw",
-      "cgg",
-      "sensoa"
-    ],
-    "volwassene_specialist_relaties": [
-      "cgg",
-      "centrum-seksueel-geweld"
-    ],
-    "volwassene_laagdrempelig_school_werkzoeken": [
+    "volwassene_school_werkzoeken": [
       "werkwinkel-vdab"
     ],
-    "volwassene_laagdrempelig_school": [
+    "volwassene_school": [
       "werkwinkel-vdab",
       "caw"
     ],
-    "volwassene_tussenliggend_school": [
-      "werkwinkel-vdab",
-      "integratiedienst"
-    ],
-    "volwassene_laagdrempelig_verslaving_drugs_ernstig": [
-      "druglijn",
-      "huisarts",
-      "caw"
-    ],
-    "volwassene_laagdrempelig_verslaving_drugs": [
+    "volwassene_verslaving_drugs": [
       "druglijn",
       "caw"
     ],
-    "volwassene_laagdrempelig_verslaving_schulden_ernstig": [
+    "volwassene_verslaving_schulden": [
       "ocmw",
-      "caw"
-    ],
-    "volwassene_laagdrempelig_verslaving_schulden": [
-      "ocmw",
-      "caw"
-    ],
-    "volwassene_tussenliggend_verslaving_drugs": [
-      "druglijn",
-      "cgg",
-      "caw"
-    ],
-    "volwassene_tussenliggend_verslaving_schulden": [
-      "ocmw",
-      "schuldbemiddeling",
-      "caw"
-    ],
-    "volwassene_specialist_verslaving": [
-      "cgg",
+      "caw",
       "schuldbemiddeling"
     ],
-    "volwassene_laagdrempelig_vrouwen_geweld": [
+    "volwassene_vrouwen_geweld": [
       "1712",
       "caw",
       "centrum-seksueel-geweld"
     ],
-    "volwassene_laagdrempelig_vrouwen_zwangerschap": [
+    "volwassene_vrouwen_zwangerschap": [
       "huisarts",
       "caw"
     ],
-    "volwassene_laagdrempelig_vrouwen_seksualiteit": [
+    "volwassene_vrouwen_seksualiteit": [
       "sensoa",
       "caw"
     ],
-    "volwassene_laagdrempelig_vrouwen": [
+    "volwassene_vrouwen": [
       "caw",
       "sensoa"
     ],
-    "ouder_laagdrempelig_opvoeding_baby_gedrag": [
+    "ouder_opvoeding_baby_gedrag": [
       "kjg",
       "huisarts"
     ],
-    "ouder_laagdrempelig_opvoeding_baby_ontwikkeling": [
+    "ouder_opvoeding_baby_ontwikkeling": [
       "kjg",
       "huisarts"
     ],
-    "ouder_laagdrempelig_opvoeding_baby": [
+    "ouder_opvoeding_baby": [
       "kjg",
       "caw"
     ],
-    "ouder_laagdrempelig_opvoeding_kind_gedrag": [
+    "ouder_opvoeding_kind_gedrag": [
       "clb",
       "caw",
       "huisarts"
     ],
-    "ouder_laagdrempelig_opvoeding_kind_ontwikkeling": [
+    "ouder_opvoeding_kind_ontwikkeling": [
       "clb",
       "huisarts"
     ],
-    "ouder_laagdrempelig_opvoeding_kind": [
+    "ouder_opvoeding_kind": [
       "clb",
       "caw"
     ],
-    "ouder_laagdrempelig_opvoeding_tiener_gedrag": [
+    "ouder_opvoeding_tiener_gedrag": [
       "clb",
       "awel",
       "caw"
     ],
-    "ouder_laagdrempelig_opvoeding_tiener_ontwikkeling": [
+    "ouder_opvoeding_tiener_ontwikkeling": [
       "clb",
       "caw"
     ],
-    "ouder_laagdrempelig_opvoeding_tiener": [
+    "ouder_opvoeding_tiener": [
       "clb",
       "caw",
       "awel"
     ],
-    "ouder_tussenliggend_opvoeding_gedrag": [
-      "cgg-jeugd",
-      "clb",
-      "vertrouwenscentrum"
-    ],
-    "ouder_tussenliggend_opvoeding_ontwikkeling": [
-      "clb",
-      "vaph",
-      "cgg-jeugd"
-    ],
-    "ouder_tussenliggend_opvoeding": [
-      "cgg-jeugd",
-      "clb",
-      "caw"
-    ],
-    "ouder_specialist_opvoeding_gedrag": [
-      "cgg-jeugd",
-      "zorgzoeker"
-    ],
-    "ouder_specialist_opvoeding_ontwikkeling": [
-      "vaph",
-      "cgg-jeugd"
-    ],
-    "ouder_specialist_opvoeding": [
-      "cgg-jeugd",
-      "vaph"
-    ],
-    "ouder_laagdrempelig_school_pesten": [
+    "ouder_school_pesten": [
       "clb",
       "awel",
       "caw"
     ],
-    "ouder_laagdrempelig_school_leerproblemen": [
+    "ouder_school_leerproblemen": [
       "clb",
       "huisarts"
     ],
-    "ouder_laagdrempelig_school_studiestress": [
+    "ouder_school_studiestress": [
       "clb",
       "caw"
-    ],
-    "ouder_tussenliggend_school_pesten": [
-      "clb",
-      "cgg-jeugd"
-    ],
-    "ouder_specialist_school_pesten": [
-      "cgg-jeugd",
-      "vaph"
     ],
     "ouder_geweld_kind": [
       "awel-meldpunt",
       "1712",
       "vertrouwenscentrum"
     ],
-    "ouder_laagdrempelig_mentaal": [
+    "ouder_mentaal": [
       "clb",
       "awel",
       "caw"
     ],
-    "ouder_tussenliggend_mentaal": [
-      "cgg-jeugd",
-      "clb"
-    ],
-    "ouder_specialist_mentaal": [
-      "cgg-jeugd",
-      "zorgzoeker"
-    ],
-    "jongere_laagdrempelig_vrouwen_geweld": [
+    "jongere_vrouwen_geweld": [
       "1712",
       "awel",
       "caw"
     ],
-    "jongere_laagdrempelig_vrouwen_seksualiteit": [
+    "jongere_vrouwen_seksualiteit": [
       "sensoa",
       "jac"
     ],
-    "jongere_laagdrempelig_vrouwen_gezondheid": [
+    "jongere_vrouwen_gezondheid": [
       "huisarts",
       "sensoa"
     ],
-    "jongere_tussenliggend_vrouwen": [
-      "cgg-jeugd",
-      "sensoa"
-    ],
-    "ouder_laagdrempelig_vrouwen_geweld": [
+    "ouder_vrouwen_geweld": [
       "1712",
       "caw",
       "vertrouwenscentrum"
     ],
-    "ouder_laagdrempelig_vrouwen_seksualiteit": [
+    "ouder_vrouwen_seksualiteit": [
       "sensoa",
       "caw"
     ],
-    "ouder_laagdrempelig_vrouwen_gezondheid": [
+    "ouder_vrouwen_gezondheid": [
       "huisarts",
       "kjg"
+    ],
+    "jongere_mentaal_ernstig": [
+      "huisarts",
+      "clb",
+      "jac"
+    ],
+    "volwassene_mentaal_ernstig": [
+      "huisarts",
+      "caw",
+      "tele-onthaal"
+    ],
+    "jongere_mentaal": [
+      "jac",
+      "clb",
+      "awel"
+    ],
+    "volwassene_mentaal": [
+      "huisarts",
+      "caw",
+      "tele-onthaal"
+    ],
+    "jongere_school": [
+      "clb",
+      "referentiepersoon",
+      "jac"
+    ],
+    "jongere_verslaving": [
+      "druglijn",
+      "tejo",
+      "jac"
+    ],
+    "jongere_relaties": [
+      "jac",
+      "awel",
+      "caw"
+    ],
+    "volwassene_relaties": [
+      "caw",
+      "tele-onthaal",
+      "sensoa"
+    ],
+    "ouder_opvoeding": [
+      "clb",
+      "caw",
+      "kjg"
+    ],
+    "ouder_school": [
+      "clb",
+      "caw",
+      "huisarts"
     ]
   },
   "meer_info": {
-    "volwassene_laagdrempelig_vrouwen_geweld": {
+    "volwassene_vrouwen_geweld": {
       "tekst": "Wil je eerst meer lezen over dit thema?",
       "link": "https://www.rosadoc.be",
       "label": "RoSa – Kenniscentrum gender en feminisme"
     },
-    "volwassene_laagdrempelig_vrouwen_zwangerschap": {
+    "volwassene_vrouwen_zwangerschap": {
       "tekst": "Wil je eerst meer lezen over dit thema?",
       "link": "https://www.rosadoc.be",
       "label": "RoSa – Kenniscentrum gender en feminisme"
     },
-    "volwassene_laagdrempelig_vrouwen_seksualiteit": {
+    "volwassene_vrouwen_seksualiteit": {
       "tekst": "Wil je eerst meer lezen over dit thema?",
       "link": "https://www.rosadoc.be",
       "label": "RoSa – Kenniscentrum gender en feminisme"
     },
-    "volwassene_laagdrempelig_vrouwen": {
+    "volwassene_vrouwen": {
       "tekst": "Wil je eerst meer lezen over dit thema?",
       "link": "https://www.rosadoc.be",
       "label": "RoSa – Kenniscentrum gender en feminisme"
     },
-    "jongere_laagdrempelig_vrouwen_geweld": {
+    "jongere_vrouwen_geweld": {
       "tekst": "Wil je eerst meer lezen over dit thema?",
       "link": "https://www.rosadoc.be",
       "label": "RoSa – Kenniscentrum gender en feminisme"
     },
-    "jongere_laagdrempelig_vrouwen_seksualiteit": {
+    "jongere_vrouwen_seksualiteit": {
       "tekst": "Wil je eerst meer lezen over dit thema?",
       "link": "https://www.rosadoc.be",
       "label": "RoSa – Kenniscentrum gender en feminisme"
     },
-    "jongere_laagdrempelig_vrouwen_gezondheid": {
+    "jongere_vrouwen_gezondheid": {
       "tekst": "Wil je eerst meer lezen over dit thema?",
       "link": "https://www.rosadoc.be",
       "label": "RoSa – Kenniscentrum gender en feminisme"
     },
-    "jongere_tussenliggend_vrouwen": {
+    "ouder_vrouwen_geweld": {
       "tekst": "Wil je eerst meer lezen over dit thema?",
       "link": "https://www.rosadoc.be",
       "label": "RoSa – Kenniscentrum gender en feminisme"
     },
-    "ouder_laagdrempelig_vrouwen_geweld": {
+    "ouder_vrouwen_seksualiteit": {
       "tekst": "Wil je eerst meer lezen over dit thema?",
       "link": "https://www.rosadoc.be",
       "label": "RoSa – Kenniscentrum gender en feminisme"
     },
-    "ouder_laagdrempelig_vrouwen_seksualiteit": {
-      "tekst": "Wil je eerst meer lezen over dit thema?",
-      "link": "https://www.rosadoc.be",
-      "label": "RoSa – Kenniscentrum gender en feminisme"
-    },
-    "ouder_laagdrempelig_vrouwen_gezondheid": {
+    "ouder_vrouwen_gezondheid": {
       "tekst": "Wil je eerst meer lezen over dit thema?",
       "link": "https://www.rosadoc.be",
       "label": "RoSa – Kenniscentrum gender en feminisme"
@@ -1351,9 +1354,6 @@
     "relaties_sub1_seksueel_geweld": {
       "skip_remaining": true,
       "route_override": "seksueel_geweld"
-    },
-    "urgentie_zeer_urgent_zelfmoord": {
-      "skip_to": "result"
     }
   },
   "crisis_services": [
@@ -1410,33 +1410,49 @@
   },
   "stappenplannen": {
     "fallback": {
-      "intro": "Op basis van jouw antwoorden tonen we je de meest geschikte hulp. Hier zijn algemene stappen om te starten.",
+      "intro": "Op basis van jouw antwoorden hebben we een persoonlijk plan opgesteld. Hieronder zie je wat je kan verwachten, welke stappen je kan zetten, en waar je het best start.",
       "stappen": [
-        "Neem contact op met de eerste dienst in de lijst hieronder",
-        "Leg je situatie kort uit en vraag wat zij voor jou kunnen betekenen",
-        "Vraag naar een eerste afspraak of intake",
-        "Noteer de naam van je contactpersoon en de afspraakdatum",
-        "Bereid je voor door op te schrijven wat je wil bespreken"
+        "Lees eerst wat je kan verwachten bij je eerste contact",
+        "Kies één dienst om mee te starten — de bovenste is meestal de beste eerste stap",
+        "Neem contact op en leg kort uit waar je mee zit",
+        "Vraag expliciet: 'Wat is de volgende stap na dit gesprek?'",
+        "Noteer naam, telefoonnummer en eventuele afspraakdatum",
+        "Kom terug als het niet helpt — er zijn altijd alternatieven"
       ],
       "documenten": [
-        "Identiteitskaart",
-        "Eventuele eerdere verslagen of attesten"
+        "Identiteitskaart (voor afspraken op locatie)",
+        "Korte notities: wat speelt er, sinds wanneer, wat heb je al geprobeerd",
+        "Eventuele briefjes of verslagen van huisarts, school of CLB"
+      ],
+      "vervolgopties": [
+        "Helpt de eerste dienst niet? Probeer de volgende in de lijst — elke dienst heeft een andere specialisatie",
+        "Wil je gespecialiseerdere hulp? Vraag doorverwijzing via je huisarts, CLB of CAW",
+        "Heb je het moeilijk tussen contacten door? Bel een luisterlijn (106, 102 of 1813) — anoniem en gratis",
+        "Niet zeker of dit de juiste hulp is? Start opnieuw met andere antwoorden of bespreek het met je huisarts"
       ]
     },
-    "jongere_laagdrempelig_mentaal_angst": {
-      "intro": "Je ervaart angst of stress en zoekt als jongere een eerste stap naar hulp. Dit zijn de stappen die meestal helpen.",
+    "jongere_mentaal_angst": {
+      "intro": "Je ervaart angst of stress en zoekt als jongere een eerste stap naar hulp. Dit is wat je kan verwachten en hoe je start.",
       "stappen": [
-        "Praat met iemand die je vertrouwt over hoe je je voelt",
-        "Neem contact op met het JAC of CLB voor een vrijblijvend gesprek",
-        "Vertel eerlijk wat je ervaart, ook als het moeilijk is",
-        "Vraag naar begeleiding op maat, je hoeft niet alles in één gesprek te vertellen",
-        "Maak een afspraak voor opvolging en kom terug als het niet beter gaat"
+        "Lees wat je kan verwachten bij JAC of CLB (zie hieronder)",
+        "Praat eventueel eerst met iemand die je vertrouwt — dat maakt het makkelijker",
+        "Bel het JAC (078 15 74 77) of spreek je CLB-consulent aan op school",
+        "Vertel eerlijk wat je ervaart — je hoeft niet alles in één keer te vertellen",
+        "Vraag: 'Wat kunnen jullie voor mij doen en wat is de volgende stap?'",
+        "Maak een opvolgafspraak en kom terug als het niet beter gaat"
       ],
       "documenten": [
-        "Identiteitskaart of verhaal in eigen woorden"
+        "Niets verplicht voor een luisterlijn of eerste gesprek",
+        "Eventueel: korte notities over wanneer de angst het ergst is"
+      ],
+      "vervolgopties": [
+        "Voelt het te overweldigend om te bellen? Start met Awel (102) — anoniem en gratis",
+        "Wil je online hulp? Bezoek jongerenlijn.be voor chat",
+        "Helpt het gesprek niet? Vraag doorverwijzing naar je huisarts of jeugd-CGG via CLB",
+        "Acute crisis? Bel 1813 (zelfmoordlijn) of 106 (Tele-Onthaal)"
       ]
     },
-    "jongere_laagdrempelig_mentaal_depressie": {
+    "jongere_mentaal_depressie": {
       "intro": "Je voelt je somber of down als jongere. Dit zijn de stappen om hulp te zoeken.",
       "stappen": [
         "Erken dat je hulp nodig hebt, dat is de moeilijkste maar belangrijkste stap",
@@ -1450,23 +1466,30 @@
         "Eventueel een briefje van je huisarts"
       ]
     },
-    "ouder_laagdrempelig_school_pesten": {
-      "intro": "Je kind wordt gepest op school. Dit zijn de stappen die meestal helpen.",
+    "ouder_school_pesten": {
+      "intro": "Je kind wordt gepest op school. Dit is wat je kan verwachten en hoe je stappen zet — je hoeft dit niet alleen op te lossen.",
       "stappen": [
-        "Praat rustig met je kind over wat er precies gebeurt en hoe het zich voelt",
-        "Noteer concrete voorvallen met datum, plaats en namen",
-        "Neem contact op met de klastitularis of de directie van de school",
-        "Vraag een gesprek aan en bespreek welke aanpak de school zal volgen",
-        "Schakel het CLB in als het pestgedrag aanhoudt na schoolinterventie",
-        "Vraag een concrete opvolgafspraak binnen 2 weken"
+        "Praat rustig met je kind: wat gebeurt er precies, hoe voelt het zich?",
+        "Noteer concrete voorvallen (datum, plaats, wie was erbij)",
+        "Neem contact op met de klastitularis — vraag een gesprek binnen deze week",
+        "Bespreek op school: wat is de aanpak, wie volgt op, wanneer evalueren jullie?",
+        "Schakel het CLB in als het pesten aanhoudt na schoolinterventie",
+        "Vraag een schriftelijke opvolgafspraak (wie doet wat, wanneer)"
       ],
       "documenten": [
         "Notities van voorvallen (datum, omschrijving)",
-        "Eventuele berichten of bewijzen (screenshots)",
-        "Contactgegevens van de school en het CLB"
+        "Screenshots of berichten (indien online pesten)",
+        "Contactgegevens van school en CLB",
+        "Eventueel een dagboekje van je kind"
+      ],
+      "vervolgopties": [
+        "Neemt school onvoldoende actie? Vraag een gesprek met de directie en noteer wat er wordt afgesproken",
+        "Ernstige situatie of geweld? Bel 1712 voor advies",
+        "Je kind heeft het moeilijk? Laat het CLB of JAC ook met je kind praten",
+        "Wil je extern advies? Het CAW helpt ouders met opvoedings- en gezinsvragen"
       ]
     },
-    "ouder_laagdrempelig_opvoeding_gedrag": {
+    "ouder_opvoeding_gedrag": {
       "intro": "Je hebt vragen over het gedrag van je kind. Dit zijn de stappen om ondersteuning te zoeken.",
       "stappen": [
         "Beschrijf het gedrag zo concreet mogelijk: wanneer, hoe vaak, wat lokt het uit",
@@ -1480,7 +1503,7 @@
         "Eigen notities over het gedrag"
       ]
     },
-    "volwassene_laagdrempelig_financieel_schulden": {
+    "volwassene_verslaving_schulden": {
       "intro": "Je hebt schulden of financiële problemen. Dit zijn de stappen om orde op zaken te stellen.",
       "stappen": [
         "Maak een overzicht van al je schulden: aan wie, hoeveel, hoe lang",
@@ -1497,7 +1520,7 @@
         "Bankafschriften van de laatste 3 maanden"
       ]
     },
-    "volwassene_laagdrempelig_relaties_relatieproblemen": {
+    "volwassene_relaties_relatieproblemen": {
       "intro": "Je hebt problemen in je relatie of thuis. Dit zijn de stappen om hulp te zoeken.",
       "stappen": [
         "Zoek een rustig moment om met je partner te praten over wat je ervaart",

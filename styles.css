@@ -46,6 +46,39 @@ body {
   font-size: 1rem;
 }
 
+.crisis-banner {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.88rem;
+}
+
+.crisis-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+}
+
+.crisis-direct-btn {
+  margin-top: 0.75rem;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #b45309;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.crisis-direct-btn:hover {
+  color: #92400e;
+}
+
 .card {
   background: var(--surface);
   border-radius: var(--radius);
@@ -125,6 +158,289 @@ body {
 .result-header p {
   color: var(--text-muted);
   font-size: 0.95rem;
+}
+
+/* ===== Resultaat secties ===== */
+.result-sectie {
+  margin-bottom: 2rem;
+}
+
+.sectie-uitleg {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.situatie-blok {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+}
+
+.situatie-lijst {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.situatie-lijst li {
+  font-size: 0.92rem;
+  padding-left: 1rem;
+  position: relative;
+  line-height: 1.5;
+}
+
+.situatie-lijst li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-size: 0.85rem;
+}
+
+.verwachting-blok {
+  background: linear-gradient(135deg, #f0fafb 0%, var(--surface) 100%);
+  border: 1px solid rgba(1, 105, 111, 0.15);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.verwachting-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.type-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 99px;
+}
+
+.type-badge-klein {
+  background: var(--bg);
+  color: var(--primary);
+  border: 1px solid rgba(1, 105, 111, 0.25);
+}
+
+.rol-tekst {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.verwachting-tekst {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.verloop-stappen {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.verloop-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.verloop-lijst {
+  list-style: none;
+  counter-reset: verloop;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.verloop-lijst li {
+  counter-increment: verloop;
+  font-size: 0.9rem;
+  padding-left: 1.75rem;
+  position: relative;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.verloop-lijst li::before {
+  content: counter(verloop);
+  position: absolute;
+  left: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0.1rem;
+}
+
+.kosten-tekst {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+}
+
+.crisis-noot {
+  font-size: 0.9rem;
+  color: #b45309;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 0.5rem;
+  padding: 0.6rem 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.meenemen-intro {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+/* Dienstkaarten */
+.dienst-lijst {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dienst-kaart {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  transition: border-color 0.15s;
+}
+
+.dienst-kaart-primary {
+  border-color: var(--primary);
+  border-width: 2px;
+  background: linear-gradient(135deg, #f0fafb 0%, var(--bg) 100%);
+}
+
+.dienst-kaart-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.dienst-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 99px;
+  background: #e5e4e0;
+  color: var(--text-muted);
+}
+
+.dienst-badge-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.dienst-kaart h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.dienst-beschrijving {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 0.4rem;
+}
+
+.dienst-rol {
+  font-size: 0.85rem;
+  color: var(--primary);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.dienst-contact {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.dienst-contact p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.dienst-contact a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.88rem;
+}
+
+.dienst-contact a:hover { text-decoration: underline; }
+
+/* Vervolgopties */
+.vervolg-blok {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.vervolg-intro {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.vervolg-lijst {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.vervolg-lijst li {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  padding-left: 1.25rem;
+  position: relative;
+}
+
+.vervolg-lijst li::before {
+  content: '↪';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+}
+
+.stappen-tip {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+  font-style: italic;
 }
 
 /* Padkeuze */
@@ -310,9 +626,9 @@ button.secondary:hover { background: #eeede9; }
   background: var(--surface);
   border-left: 4px solid var(--primary);
   border-radius: var(--radius);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: var(--shadow);
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
 }
 
 .stappenplan-blok h3 {
